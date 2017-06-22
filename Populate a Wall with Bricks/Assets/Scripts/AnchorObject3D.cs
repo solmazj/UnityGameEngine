@@ -22,7 +22,7 @@ public class AnchorObject3D : MonoBehaviour {
 		//position is at the lower right corner of the wall;
 		//because it rises from the ground, we make y=0.5f (the center of the first brick)
 		//constants 2, 0.5f have to do with the dimensions of the brick I'm using rn
-		anchorObject.transform.position = new Vector3(-xScale/2 + 1, 0.5f, -zScale + 0.5f);
+		anchorObject.transform.position = new Vector3(-xScale/2 + 1, 0.5f, -zScale/2 + 0.5f);
 	}
 
 	void Start () {
