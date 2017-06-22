@@ -7,6 +7,7 @@ public class BrickWallBuild : MonoBehaviour {
 	public int horizontalAmount;
 	public int verticalAmount;
 
+	void Start () {
 
 		WallBuild.wallBuild (horizontalAmount, verticalAmount, this.gameObject);
 	}

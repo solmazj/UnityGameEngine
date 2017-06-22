@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BrickOutOfAWall : MonoBehaviour {
 
-	private GameObject wall;
+	// mess up this part of the code 
+	//private GameObject wall;
 	private float xLength;
 	private float yLength;
 
