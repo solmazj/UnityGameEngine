@@ -23,7 +23,8 @@ public class WallBuild : MonoBehaviour {
 		GameObject prefab = Resources.Load ("brickRed") as GameObject;
 		for (int k = 0; k < depth; k++) {
 			for (int i = 0; i < ver; i++) {
-				float offset = i % 2;
+				//better but not ideal, still need boundary conditions
+				float offset = (k % 2 + i % 2) % 2;
 				for (int j = 0; j < hor; j++) {
 					GameObject brick = Instantiate (prefab) as GameObject;
 					brick.transform.position = new Vector3 (anchor.transform.position.x + j * 2 + offset,
