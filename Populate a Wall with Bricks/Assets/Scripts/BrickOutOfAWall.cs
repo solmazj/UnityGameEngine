@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BrickOutOfAWall : MonoBehaviour {
-
-	// mess up this part of the code 
-	//private GameObject wall;
+ 
+	private GameObject wall;
 	private float xLength;
 	private float yLength;
 
