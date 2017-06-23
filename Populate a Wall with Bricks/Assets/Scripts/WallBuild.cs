@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WallBuild : MonoBehaviour {
 	
-	//anchor is a bad name, only one row of bricks
+	//only one row of bricks;
+	//anchor is a bad name
 	public static void wallBuild (float hor, float ver, GameObject anchor) {
 
 		GameObject prefab = Resources.Load ("brickRed") as GameObject;

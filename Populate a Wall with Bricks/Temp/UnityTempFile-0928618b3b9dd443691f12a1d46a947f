@@ -92,6 +92,8 @@
 'Assets/Scripts/AnchorObject3D.cs'
 'Assets/Scripts/BrickOutOfAWall.cs'
 'Assets/Scripts/BrickWallBuild.cs'
+'Assets/Scripts/Make a Wall with Sliders/ChangeLengthSlider.cs'
+'Assets/Scripts/Make a Wall with Sliders/InitialSliderValue.cs'
 'Assets/Scripts/PlaneAsGroundPosition.cs'
 'Assets/Scripts/WallBuild.cs'
 -r:'/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity/System.Runtime.Serialization.dll'
