@@ -17,14 +17,12 @@ public class ValueUpdate : MonoBehaviour
 
 	public void UpdateValueFromFloat(float value) 
 	{
-		Debug.Log("float value changed: " + value);
 		if (mySlider) { mySlider.value = value; }
-		if (myField) { myField.text = value.ToString(); }
+		if (myField) { myField.text = value.ToString("n2"); }
 	}
 
 	public void UpdateValueFromString(string value) 
 	{
-		Debug.Log("string value changed: " + value);
 		if (mySlider) { mySlider.value = float.Parse(value); }
 		if (myField) { myField.text = value; }
 	}
