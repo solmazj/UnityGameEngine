@@ -23,11 +23,8 @@ public class ColorRGB : MonoBehaviour
 
 	public void ColorUpdateRed (string input) 
 	{
-		Debug.Log ("I am running");
 		red = Convert.ToByte(input);
-		Debug.Log ("I got the input");
 		brick.GetComponent<Renderer>().material.color = new Color32(red, green, blue, transparency);
-		Debug.Log ("Should have changed the color by now");
 	}
 
 	public void ColorUpdateGreen (string input) 
