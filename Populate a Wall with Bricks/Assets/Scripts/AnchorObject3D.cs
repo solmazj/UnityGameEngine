@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnchorObject3D : MonoBehaviour {
+//attaches to the wall
+public class AnchorObject3D : MonoBehaviour 
+{
 
-	//attaches to a wall
 	private GameObject wall;
 	private GameObject anchorObject;
 	float xScale;
 	float yScale;
 	float zScale;
 
-	void Awake () {
-
+	void Awake () 
+	{
 		wall = this.gameObject;
 		xScale = wall.transform.localScale.x;
 		yScale = wall.transform.localScale.y;
@@ -25,8 +26,9 @@ public class AnchorObject3D : MonoBehaviour {
 		anchorObject.transform.position = new Vector3(-xScale/2 + 1, 0.5f, -zScale/2 + 0.5f);
 	}
 
-	void Start () {
-		WallBuild.wallBuild (xScale/2, yScale, zScale, anchorObject);
+	void Start () 
+	{
+		WallBuilding.WallBuild (xScale/2, yScale, zScale, anchorObject);
 		wall.SetActive (false);
 	}
 }

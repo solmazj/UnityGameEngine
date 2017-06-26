@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - SliderValue
+  - x
+  - y
+  - z
   layers:
   - Default
   - TransparentFX

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnchorObject : MonoBehaviour {
+//attaches to the wall
+public class AnchorObject : MonoBehaviour 
+{
 
 	//works only when z scale = 1
 	//attaches to a wall
@@ -11,8 +13,8 @@ public class AnchorObject : MonoBehaviour {
 	float xScale;
 	float yScale;
 
-	void Awake () {
-
+	void Awake () 
+	{
 		//z component is not that important now
 		wall = this.gameObject;
 		xScale = wall.transform.localScale.x;
@@ -24,8 +26,9 @@ public class AnchorObject : MonoBehaviour {
 		anchorObject.transform.position = new Vector3(-xScale/2 + 1, 0.5f, 0);
 	}
 
-	void Start () {
-		WallBuild.wallBuild (xScale/2, yScale, anchorObject);
+	void Start () 
+	{
+		WallBuilding.WallBuild (xScale/2, yScale, anchorObject);
 		wall.SetActive (false);
 	}
 }
