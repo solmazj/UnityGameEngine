@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public class ValueUpdate : MonoBehaviour 
 {
@@ -23,6 +24,7 @@ public class ValueUpdate : MonoBehaviour
 
 	public void UpdateValueFromString(string value) 
 	{
+		if (String.IsNullOrEmpty (value)) {return; }
 		if (mySlider) { mySlider.value = float.Parse(value); }
 		if (myField) { myField.text = value; }
 	}

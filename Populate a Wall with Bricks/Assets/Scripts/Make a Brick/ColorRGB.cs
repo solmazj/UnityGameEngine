@@ -23,19 +23,35 @@ public class ColorRGB : MonoBehaviour
 
 	public void ColorUpdateRed (string input) 
 	{
-		red = Convert.ToByte(input);
-		brick.GetComponent<Renderer>().material.color = new Color32(red, green, blue, transparency);
+		red = BoundaryConditions (input);
+		ColorUpdate ();
 	}
 
 	public void ColorUpdateGreen (string input) 
 	{
-		green = Convert.ToByte(input);
-		brick.GetComponent<Renderer>().material.color = new Color32(red, green, blue, transparency);
+		green = BoundaryConditions (input);
+		ColorUpdate ();
 	}
 	 
 	public void ColorUpdateBlue (string input) 
 	{
-		blue = Convert.ToByte(input);
+		blue = BoundaryConditions (input);
+		ColorUpdate ();
+	}
+
+	byte BoundaryConditions (string input) 
+	{
+		if (String.IsNullOrEmpty (input)) {return (byte)255;}
+
+		int integer = Mathf.Clamp (int.Parse (input), 0, 255);
+		return (byte)integer;
+	} 
+
+	void ColorUpdate ()
+	{
 		brick.GetComponent<Renderer>().material.color = new Color32(red, green, blue, transparency);
 	}
 }
+
+
+
