@@ -41,9 +41,9 @@ public class ColorRGB : MonoBehaviour
 
 	byte BoundaryConditions (string input) 
 	{
-		if (String.IsNullOrEmpty (input)) {return (byte)255;}
+		if (String.IsNullOrEmpty(input)) {return (byte)255;}
 
-		int integer = Mathf.Clamp (int.Parse (input), 0, 255);
+		int integer = Mathf.Clamp (int.Parse(input), 0, 255);
 		return (byte)integer;
 	} 
 
