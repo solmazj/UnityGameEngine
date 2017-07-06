@@ -760,7 +760,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 2.26
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1234,8 +1234,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: TaskOnClick
+      - m_Target: {fileID: 1093790899}
+        m_MethodName: PopulateWallWithCreatedBrick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1549,7 +1549,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 2.84
+  m_Value: 6
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2009,7 +2009,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 0.47
+  m_Value: 3.11
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2437,7 +2437,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 449410027}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.9, y: 2.87, z: -40.7}
+  m_LocalPosition: {x: 1.88, y: 2.87, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2902,7 +2902,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 1.65
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3749,7 +3749,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1.65
+  m_Text: 2.00
 --- !u!222 &896710322
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4014,7 +4014,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2.26
+  m_Text: 2.00
 --- !u!222 &975509957
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4253,8 +4253,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1066896439}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.42, z: 0}
-  m_LocalScale: {x: 6.11, y: 2.84, z: 0.47}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 6, y: 6, z: 3.11}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -4324,7 +4324,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 28f31e4af93cf4c079224a60f938d528, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4369,8 +4369,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1093790892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 0.825, z: 0}
-  m_LocalScale: {x: 2.26, y: 1.65, z: 1.61}
+  m_LocalPosition: {x: 12, y: 1, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -4413,12 +4413,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1093790892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 210d7efdae74b4564848b31a048a614b, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b1723813f09348aeaec07f801d71a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wall: {fileID: 0}
-  mortar: 0
-  mortarWidth: 7
+  wall: {fileID: 1066896439}
 --- !u!114 &1093790901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4649,7 +4647,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0.47
+  m_Text: 3.11
 --- !u!222 &1211179406
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4738,7 +4736,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 1.61
+  m_Value: 1.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -4933,7 +4931,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 6.11
+  m_Value: 6
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -5764,7 +5762,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1.61
+  m_Text: 1.50
 --- !u!222 &1644079315
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5928,7 +5926,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2.84
+  m_Text: 6.00
 --- !u!222 &1680411264
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6927,7 +6925,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 6.11
+  m_Text: 6.00
 --- !u!222 &2120023405
 CanvasRenderer:
   m_ObjectHideFlags: 0
