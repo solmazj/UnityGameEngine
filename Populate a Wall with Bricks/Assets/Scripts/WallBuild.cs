@@ -5,8 +5,8 @@ using UnityEditor;
 using System;
 
 //attaches to the modeled brick
-//Row is rows seen from the front (x-y plane), Lane is rows seen from the top (x-z plane)
-//the constant numbers correspond to the cases when InitialPositions script is enabled
+/*Row is rows seen from the front (x-y plane), Lane is rows seen from the top (x-z plane)
+the constant numbers correspond to the cases when InitialPositions script is enabled*/
 public class WallBuild : MonoBehaviour {
 
 	public GameObject wall;
@@ -53,6 +53,7 @@ public class WallBuild : MonoBehaviour {
 		} else {
 			DrawWall (new Vector3 ((-wallLength + brickLength) / 2, brickHeight / 2, (-wallDepth + brickDepth) / 2));
 		}
+		//default wall disappears after you change it the first time
 		wall.SetActive (false);
 	}
 
@@ -62,6 +63,8 @@ public class WallBuild : MonoBehaviour {
 		brick.transform.localScale = modeledBrick.transform.localScale;
 		PrefabUtility.CreatePrefab ("Assets/Resources/createdBrick.prefab", brick);
 		Destroy (brick);
+		/*because it is a prefab, if the color of the modeled brick changes, the prefab color
+		changes too even if this method is not called (in this case, even if button is not pressed*/
 		Material mat = modeledBrick.GetComponent<Renderer> ().material;
 		prefab = Resources.Load ("createdBrick") as GameObject;
 		prefab.GetComponent<Renderer> ().material = mat;
