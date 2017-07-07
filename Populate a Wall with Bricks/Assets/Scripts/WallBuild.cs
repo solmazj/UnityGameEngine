@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-//attaches to the brick
+//attaches to the modeled brick
+//Row is rows seen from the front (x-y plane), Lane is rows seen from the top (x-z plane)
+//the constant numbers correspond to the cases when InitialPositions script is enabled
 public class WallBuild : MonoBehaviour {
 
 	public GameObject wall;
@@ -19,27 +21,23 @@ public class WallBuild : MonoBehaviour {
 	List<GameObject> goList;
 	float topHeight;
 
+
 	void Awake () {
 		//initiations
 		modeledBrick = this.gameObject;
 		goList = new List<GameObject>();
 	}
-		
-	public void CreatePrefabBrick () {
-		//activated when push on Brick Ready button
-		//creates a gameobject called Cube with the center at the global origin
-		GameObject brick = GameObject.CreatePrimitive(PrimitiveType.Cube);
-		brick.transform.localScale = modeledBrick.transform.localScale;
-		PrefabUtility.CreatePrefab ("Assets/Resources/createdBrick.prefab", brick);
-		brick.SetActive(false);
-		Material mat = modeledBrick.GetComponent<Renderer> ().material;
-		prefab = Resources.Load ("createdBrick") as GameObject;
-		//makes a prefab out of this Cube and changes its color
-		prefab.GetComponent<Renderer> ().material = mat;
-	}
+
 
 	public void PopulateWallWithCreatedBrick () {
 		//activated when Populate the Wall button is clicked
+		CreatePrefabBrick();
+		//cleaning the objects created before
+		foreach (GameObject brick in goList) {
+			if (brick != null && brick.tag == "brick") {
+				Destroy (brick);
+			}
+		}
 		//global variables assigned
 		brickLength = modeledBrick.transform.localScale.x;
 		brickHeight = modeledBrick.transform.localScale.y;
@@ -47,27 +45,43 @@ public class WallBuild : MonoBehaviour {
 		wallLength = wall.transform.localScale.x;
 		wallHeight = wall.transform.localScale.y;
 		wallDepth = wall.transform.localScale.z;
-		//topHeight = brickHeight;
+	
 		if (wallDepth <= brickDepth) {
 			prefab.transform.localScale = new Vector3 (prefab.transform.localScale.x,
 				prefab.transform.localScale.y, wallDepth);
 			DrawOddLane (new Vector3((-wallLength + brickLength) / 2, brickHeight / 2, 0));
 		} else {
-			DrawRows (new Vector3 ((-wallLength + brickLength) / 2, brickHeight / 2, (-wallDepth + brickDepth) / 2));
+			DrawWall (new Vector3 ((-wallLength + brickLength) / 2, brickHeight / 2, (-wallDepth + brickDepth) / 2));
 		}
 		wall.SetActive (false);
 	}
+
+	void CreatePrefabBrick () {
+		//creates a prefab with the given dimensions and color
+		GameObject brick = GameObject.CreatePrimitive(PrimitiveType.Cube);
+		brick.transform.localScale = modeledBrick.transform.localScale;
+		PrefabUtility.CreatePrefab ("Assets/Resources/createdBrick.prefab", brick);
+		Destroy (brick);
+		Material mat = modeledBrick.GetComponent<Renderer> ().material;
+		prefab = Resources.Load ("createdBrick") as GameObject;
+		prefab.GetComponent<Renderer> ().material = mat;
+	}
+
 
 	GameObject DrawBrick(Vector3 position) {
 		//creates a brick from the prefab with its center in the given position
 		GameObject brick = Instantiate (prefab) as GameObject;
 		brick.transform.position = position;
+		//tag name needs to be defined (added into tags) before runtime
+		brick.tag = "brick"; 
+		//if on last row, need to change the height, aka scale
 		if (topHeight != brickHeight) {
 			brick.transform.localScale = new Vector3 (brick.transform.localScale.x, topHeight,
 				brick.transform.localScale.z);
 		}
 		return brick;
 	}
+
 
 	GameObject DrawHalfBrick(Vector3 position) {
 		//creates a brick with half the length of the prefab with its center in the given position
@@ -82,7 +96,9 @@ public class WallBuild : MonoBehaviour {
 		return brick;
 	}
 
+
 	GameObject DrawEndBrick (Vector3 position) {
+		//creates a brick for the end of the row
 		GameObject brick = DrawBrick (position);
 		if (topHeight != brickHeight) {
 			brick.transform.localScale = new Vector3 ((wallLength - 2 * position.x), 
@@ -95,13 +111,15 @@ public class WallBuild : MonoBehaviour {
 		return brick;
 	}
 
+
 	void DrawOddRow (Vector3 position) {
-		//ok when position.x is negative, not true when the position.x is too big positive number, so ok
+		//position.x starts with negative numbers; populate as long as whole bricks fit
 		while ((wallLength - 2 * position.x) >= brickLength) 
 		{
 			goList.Add (DrawBrick (position));
 			position.x += brickLength;
 		}
+		//draw end brick if one can is needed
 		if ((wallLength+brickLength)/2 > position.x) 
 		{
 			position.x = wallLength / 4 + position.x / 2 - brickLength / 4;
@@ -109,10 +127,11 @@ public class WallBuild : MonoBehaviour {
 		}
 	}
 
+
 	void DrawEvenRow (Vector3 position) {
+		//create half a brick first, and then repeat the process in DrawOddRow
 		position.x = position.x - brickLength / 4;
 		goList.Add (DrawHalfBrick (position));
-		//move half a brick, because just created a half a brick
 		position.x += 3 * brickLength/ 4;
 		while ((wallLength - 2 * position.x) >= brickLength) 
 		{
@@ -126,12 +145,13 @@ public class WallBuild : MonoBehaviour {
 		}
 	}
 
+
 	void DrawOddLane (Vector3 position) {
 		topHeight = brickHeight;
 		while ((position.y - brickHeight/2) < wallHeight)
 		{
 			if (2 * (wallHeight - position.y) < brickHeight) {
-				//draw a smaller (odd) brick and break
+				//draw a shorter brick if a whole brick can't fit and break because end of the lane
 				position.y = wallHeight/2 + position.y/2 - brickHeight/4;
 				topHeight = 2 * (wallHeight-position.y);
 				DrawOddRow (position);
@@ -141,8 +161,7 @@ public class WallBuild : MonoBehaviour {
 				position.y += brickHeight;
 			}
 			if (Mathf.Abs(2 * (wallHeight - position.y)) < brickHeight) {
-				
-				//draw a smaller (even) brick and break
+				//draw a shorter brick and break
 				position.y = wallHeight/2 + position.y/2 - brickHeight/4; 
 				topHeight = 2 * (wallHeight-position.y);
 				DrawEvenRow (position);
@@ -154,12 +173,13 @@ public class WallBuild : MonoBehaviour {
 		}
 	}
 
+
 	void DrawEvenLane (Vector3 position) {
+		//same as DrawOddLane, but this starts with DrawEvenRow
 		topHeight = brickHeight;
 		while ((position.y - brickHeight/2) < wallHeight)
 		{
 			if (2 * (wallHeight - position.y) < brickHeight) {
-				//draw a smaller (even) brick and break
 				position.y = wallHeight/2 + position.y/2 - brickHeight/4;
 				topHeight = 2 * (wallHeight-position.y);
 				DrawEvenRow (position);
@@ -169,7 +189,6 @@ public class WallBuild : MonoBehaviour {
 				position.y += brickHeight;
 			}
 			if (Mathf.Abs(2 * (wallHeight - position.y)) < brickHeight) {
-				//draw a smaller (odd) brick and break
 				position.y = wallHeight/2 + position.y/2 - brickHeight/4;
 				topHeight = 2 * (wallHeight-position.y);
 				DrawOddRow (position);
@@ -181,12 +200,14 @@ public class WallBuild : MonoBehaviour {
 		}
 	}
 
-	void DrawRows (Vector3 position) {
+
+	void DrawWall (Vector3 position) {
 		while ((wallDepth - 2 * position.z) >= brickDepth)
 		{
 				DrawOddLane (position);
 				position.z += brickDepth;
 			if ((wallDepth - 2 * position.z) < brickDepth) {
+				//change the depth if whole brick depth does not fit and break
 				position.z = wallDepth/4 + position.z/2 - brickDepth/4;
 				prefab.transform.localScale = new Vector3 (prefab.transform.localScale.x, 
 					prefab.transform.localScale.y, (wallDepth - 2 * position.z));
@@ -197,6 +218,7 @@ public class WallBuild : MonoBehaviour {
 				position.z += brickDepth;
 			}
 			if ((wallDepth - 2 * position.z) < brickDepth) {
+				//change the depth if whole brick depth does not fit and break
 				position.z = wallDepth / 4 + position.z / 2 - brickDepth / 4;
 				prefab.transform.localScale = new Vector3 (prefab.transform.localScale.x, 
 					prefab.transform.localScale.y, (wallDepth - 2 * position.z)); 

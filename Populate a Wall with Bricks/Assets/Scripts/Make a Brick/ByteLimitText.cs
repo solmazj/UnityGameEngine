@@ -4,15 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+//reflects valid RGB values used from ColorRGB script in the InputField text
 public class ByteLimitText : MonoBehaviour {
 
 	public InputField field;
 
 	public void Start ()
 	{
-		field.onEndEdit.AddListener (delegate {
-			ByteLimit (field);
-		});
+		field.onEndEdit.AddListener (delegate {ByteLimit (field);});
 	}
 
 	void ByteLimit (InputField inputField)

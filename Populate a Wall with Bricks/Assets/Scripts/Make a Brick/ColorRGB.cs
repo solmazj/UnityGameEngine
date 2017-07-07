@@ -9,9 +9,9 @@ public class ColorRGB : MonoBehaviour
 {
 
 	private GameObject brick;
-	//transparency of a stone is usually 255, but in case the script is used for other materials
-	//another method with transparency can be written, although does not seem to work for now
+	//transparency of a stone is set for 255
 	private byte transparency = 255;
+	//RGB values are set to be 255 as a default color
 	private byte red = 255;
 	private byte green = 255;
 	private byte blue = 255;
