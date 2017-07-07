@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using UnityEngine.UI;
 
 //attaches to the modeled brick
 /*Row is rows seen from the front (x-y plane), Lane is rows seen from the top (x-z plane)
@@ -10,6 +11,7 @@ the constant numbers correspond to the cases when InitialPositions script is ena
 public class WallBuild : MonoBehaviour {
 
 	public GameObject wall;
+	public Text brickCount;
 	GameObject modeledBrick;
 	GameObject prefab;
 	float brickLength;
@@ -38,6 +40,7 @@ public class WallBuild : MonoBehaviour {
 				Destroy (brick);
 			}
 		}
+		goList.Clear ();
 		//global variables assigned
 		brickLength = modeledBrick.transform.localScale.x;
 		brickHeight = modeledBrick.transform.localScale.y;
@@ -53,6 +56,7 @@ public class WallBuild : MonoBehaviour {
 		} else {
 			DrawWall (new Vector3 ((-wallLength + brickLength) / 2, brickHeight / 2, (-wallDepth + brickDepth) / 2));
 		}
+		BrickCount ();
 		//default wall disappears after you change it the first time
 		wall.SetActive (false);
 	}
@@ -229,5 +233,9 @@ public class WallBuild : MonoBehaviour {
 				return;
 			}
 		}
+	}
+
+	void BrickCount () {
+		brickCount.text = goList.Count.ToString ();
 	}
 }
