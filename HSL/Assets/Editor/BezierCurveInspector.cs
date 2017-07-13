@@ -13,7 +13,7 @@ public class BezierCurveInspector : Editor {
 	int selectedIndex = -1;
 
 	//if ShowDirections is used
-	 private const int lineSteps = 10;
+	 private const int lineSteps = 50;
 	 private const float directionScale = 0.5f;
 
 	private void OnSceneGUI () {

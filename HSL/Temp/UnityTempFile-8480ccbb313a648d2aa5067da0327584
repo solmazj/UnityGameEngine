@@ -98,6 +98,7 @@
 'Assets/Scripts/Walls/Make a Brick/ByteLimitText.cs'
 'Assets/Scripts/Walls/Make a Brick/ColorRGB.cs'
 'Assets/Scripts/Walls/WallBuild.cs'
+'Assets/SplineDecorator.cs'
 -r:'/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity/System.Runtime.Serialization.dll'
 -r:'/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity/System.Xml.Linq.dll'
 -r:'/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity/UnityScript.dll'

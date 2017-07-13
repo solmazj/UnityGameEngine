@@ -10,8 +10,7 @@ public class WedgeBrickMesh : MonoBehaviour {
 	public Material material;
 
 
-	void Update () {
-		Debug.Log ("I am being constantly updated");
+	void Start () {
 		if (GetComponent<MeshFilter> () == null) {
 			gameObject.AddComponent<MeshFilter> ();
 		}
@@ -27,40 +26,40 @@ public class WedgeBrickMesh : MonoBehaviour {
 
 		//assigning vertices
 		Vector3[] vertices = new Vector3[24];
-		vertices [0] = new Vector3 (-inner, 0, 0);          //front left bottom
-		vertices [1] = new Vector3 (inner, 0, 0);			//front right bottom
-		vertices [2] = new Vector3 (-outer, height, 0);		//front left up
-		vertices [3] = new Vector3 (outer, height, 0);		//front right up
-		vertices [4] = new Vector3 (-inner, 0, depth);		//back left bottom
-		vertices [5] = new Vector3 (inner, 0, depth);		//back right bottom
-		vertices [6] = new Vector3 (-outer, height, depth); //back left up
-		vertices [7] = new Vector3 (outer, height, depth);	//back right up
-		vertices [8] = new Vector3 (inner, 0, 0);
-		vertices [9] = new Vector3 (outer, height, 0);
-		vertices [10] = new Vector3 (inner, 0, depth);
-		vertices [11] = new Vector3 (outer, height, depth);
-		vertices [12] = new Vector3 (-inner, 0, 0);
-		vertices [13] = new Vector3 (-outer, height, 0);
-		vertices [14] = new Vector3 (-inner, 0, depth);
-		vertices [15] = new Vector3 (-outer, height, depth);
-		vertices [16] = new Vector3 (-outer, height, 0);
-		vertices [17] = new Vector3 (outer, height, 0);
-		vertices [18] = new Vector3 (-outer, height, depth);
-		vertices [19] = new Vector3 (outer, height, depth);
-		vertices [20] = new Vector3 (-inner, 0, 0);
-		vertices [21] = new Vector3 (inner, 0, 0);
-		vertices [22] = new Vector3 (-inner, 0, depth);
-		vertices [23] = new Vector3 (inner, 0, depth);
+		vertices [0] = new Vector3 (0, 0, -inner);          //front left bottom
+		vertices [1] = new Vector3 (0, 0, inner);			//front right bottom
+		vertices [2] = new Vector3 (0, height, -outer);		//front left up
+		vertices [3] = new Vector3 (0, height, outer);		//front right up
+		vertices [4] = new Vector3 (depth, 0, -inner);		//back left bottom
+		vertices [5] = new Vector3 (depth, 0, inner);		//back right bottom
+		vertices [6] = new Vector3 (depth, height, -outer); //back left up
+		vertices [7] = new Vector3 (depth, height, outer);	//back right up
+		vertices [8] = new Vector3 (0, 0, inner);
+		vertices [9] = new Vector3 (0, height, outer);
+		vertices [10] = new Vector3 (depth, 0, inner);
+		vertices [11] = new Vector3 (depth, height, outer);
+		vertices [12] = new Vector3 (0, 0, -inner);
+		vertices [13] = new Vector3 (0, height, -outer);
+		vertices [14] = new Vector3 (depth, 0, -inner);
+		vertices [15] = new Vector3 (depth, height, -outer);
+		vertices [16] = new Vector3 (0, height, -outer);
+		vertices [17] = new Vector3 (0, height, outer);
+		vertices [18] = new Vector3 (depth, height, -outer);
+		vertices [19] = new Vector3 (depth, height, outer);
+		vertices [20] = new Vector3 (0, 0, -inner);
+		vertices [21] = new Vector3 (0, 0, inner);
+		vertices [22] = new Vector3 (depth, 0, -inner);
+		vertices [23] = new Vector3 (depth, 0, inner);
 		mesh.vertices = vertices;
 
 		//assigning triangles
 		int[] triangles = new int[] {
-			0, 2, 3, 1, 0, 3, //front face
-			7, 6, 5, 4, 5, 6,  //back face
-			8, 9, 11, 10, 8, 11, //right face
-			14, 15, 13, 12, 14, 13, //left face
-			16, 18, 19, 17, 16, 19, //up face
-			23, 20, 21, 23, 22, 20, //bottom face
+			3, 2, 0, 3, 0, 1, //front face
+			5, 6, 7, 6, 5, 4,  //back face
+			11, 9, 8, 11, 8, 10, //right face
+			13, 15, 14, 13, 14, 12, //left face
+			19, 18, 16, 19, 16, 17, //up face
+			21, 20, 23, 20, 22, 23, //bottom face
 		};
 		mesh.triangles = triangles;
 
