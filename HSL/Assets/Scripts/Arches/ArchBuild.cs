@@ -9,10 +9,11 @@ public class ArchBuild : MonoBehaviour {
 
 	public BezierCurve wireArc;
 	public Transform brick;
-	public int steps = 100; //public or private
+	public int steps = 100; //can be public or private
 	float[] arcLengths;
 	float curveLength;
-	float curveHeight;
+	float archHeight;
+	//float archFreeSpan; //distance between 1st and 4th control points
 
 	public void BuildAnArch () {
 		//stop if any of the input is not supplied
@@ -21,12 +22,16 @@ public class ArchBuild : MonoBehaviour {
 			return;
 		}
 
+		//do arc calcs
 		ArcLengthsCalc ();
-		//keeping track of brick number
-		int brickNumber = 0;
+		//the inner edge of the brick is along the arc
 		float brickLength = brick.GetComponent<WedgeBrickMesh> ().innerLength;
+		//how many bricks are needed to populate the arc
+		Debug.Log("The number of float bricks is " + curveLength/brickLength);
+		int brickNumber = Mathf.RoundToInt(curveLength / brickLength);
 		//parameter u for the arc length is like t for the curve; it's between 0 and 1
-		for (float u = (brickLength/2)/curveLength; u <= 1; u += brickLength/curveLength) {
+		float u = (brickLength/2)/curveLength;
+		for (int i = 1; i <= brickNumber; i++){
 			Transform item = Instantiate(brick) as Transform;
 			Vector3 position = wireArc.GetPoint(Map (u));
 			item.transform.localPosition = position;
@@ -34,9 +39,11 @@ public class ArchBuild : MonoBehaviour {
 			item.transform.LookAt(position + wireArc.GetDirection(u));
 			//setting the object to which this script is attached as the parent of the created bricks
 			item.transform.parent = transform;
-			brickNumber++;
+			u += brickLength/curveLength;
 		}
-		Debug.Log (brickNumber.ToString());
+		//remove the brick from the scene
+		brick.gameObject.SetActive (false);
+		Debug.Log ("The number of bricks is " + brickNumber.ToString());
 	}
 
 
@@ -50,7 +57,7 @@ public class ArchBuild : MonoBehaviour {
 		for (int i = 1; i <= steps; i++) {
 			float increment = 1f/steps, x = wireArc.GetPoint(i * increment).x, y = wireArc.GetPoint(i * increment).y;
 			if (y > oy) {
-				curveHeight = y;
+				archHeight = y;
 			}
 			float dx = ox - x, dy = oy - y;
 			clen += Mathf.Sqrt (dx * dx + dy * dy);
@@ -58,7 +65,7 @@ public class ArchBuild : MonoBehaviour {
 			ox = x; oy=y;
 		}
 		//total curve length, also equal to arcLengths[len]
-		Debug.Log(curveHeight.ToString());
+		Debug.Log("The height of the arch is " + archHeight.ToString());
 		curveLength = clen;
 	}
 

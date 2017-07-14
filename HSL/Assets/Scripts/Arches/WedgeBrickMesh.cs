@@ -11,6 +11,7 @@ public class WedgeBrickMesh : MonoBehaviour {
 
 
 	void Start () {
+		//check if the object that the script is attached to is an empty object
 		if (GetComponent<MeshFilter> () == null) {
 			gameObject.AddComponent<MeshFilter> ();
 		}
@@ -18,9 +19,11 @@ public class WedgeBrickMesh : MonoBehaviour {
 			gameObject.AddComponent<MeshRenderer> ();
 		}
 
+		//create the mesh
 		Mesh mesh = new Mesh();
 		mesh.name = "WedgeBrick";
 
+		//variables necessary for assigning vertices
 		float inner = innerLength / 2;
 		float outer = outerLength / 2;
 
@@ -78,9 +81,11 @@ public class WedgeBrickMesh : MonoBehaviour {
 		};
 		mesh.uv = uvs;
 
+		//do lighting calcs
 		mesh.RecalculateNormals();
 		mesh.RecalculateBounds();
 
+		//assign the material+texture, and finally assign the mesh to the object
 		GetComponent<MeshRenderer> ().material = material;
 		GetComponent<MeshFilter>().mesh = mesh;
 	}
