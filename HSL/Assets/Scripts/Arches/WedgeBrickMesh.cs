@@ -7,43 +7,7 @@ using System;
 
 public class WedgeBrickMesh : MonoBehaviour {
 
-	float innerLength, outerLength, height, depth;
-	public Material mat;
-
-	//need this to call from ArchBuild, don't know if actually need to access this value
-	public float InnerLength {
-		get { return innerLength; }
-	}
-
-	public void SetInnerLength (string value) {
-		innerLength = ConditionCheck (value);
-		CreateMesh ();
-	}
-
-	public void SetOuterLength (string value) {
-		outerLength = ConditionCheck (value);
-		CreateMesh ();
-	}
-
-	public void SetHeight (string value) {
-		height = ConditionCheck(value);
-		CreateMesh ();
-	}
-
-	public void SetDepth (string value) {
-		depth =  ConditionCheck(value);
-		CreateMesh ();
-	}
-
-	float ConditionCheck (string input) 
-	{
-		if (String.IsNullOrEmpty(input)) {return 0.1f;}
-
-		float output = float.Parse (input);
-		return output;
-	}
-
-	void CreateMesh () {
+	public void CreateMesh (float innerLength, float outerLength, float height, float depth, string name) {
 		//check if the object that the script is attached to is an empty object
 		if (GetComponent<MeshFilter> () == null) {
 			gameObject.AddComponent<MeshFilter> ();
@@ -119,7 +83,7 @@ public class WedgeBrickMesh : MonoBehaviour {
 		mesh.RecalculateBounds();
 
 		//assign the material+texture, and finally assign the mesh to the object
-		GetComponent<MeshRenderer> ().material = mat;
+		GetComponent<MeshRenderer> ().material =  Resources.Load (name) as Material;
 		GetComponent<MeshFilter>().mesh = mesh;
 	}
 }
