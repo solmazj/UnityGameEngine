@@ -2,8 +2,25 @@
 
 public class BezierCurve : MonoBehaviour {
 
+	public float freeSpan;
+	public float archHeight;
+	[HideInInspector] //makes the variable public, but not visible in the Inspector
 	public Vector3[] points;
-	
+
+
+	public void ArchInfoReady () {
+		if (freeSpan <= 0 || archHeight <= 0) {
+			Debug.Log ("Inapplicable input values");
+		} else {
+			points = new Vector3[] {
+				new Vector3 (-freeSpan / 2, 0f, 0f),
+				new Vector3 (-freeSpan / 4, archHeight / 0.75f, 0f),
+				new Vector3 (freeSpan / 4, archHeight / 0.75f, 0f),
+				new Vector3 (freeSpan / 2, 0f, 0f)
+			};
+		}
+	}
+
 	public Vector3 GetPoint (float t) {
 		return transform.TransformPoint(Bezier.GetPoint(points[0], points[1], points[2], points[3], t));
 	}
@@ -16,20 +33,5 @@ public class BezierCurve : MonoBehaviour {
 	//makes velocity vector's magnitude equal to one, so just shows the direction of the velocity
 	public Vector3 GetDirection (float t) {
 		return GetVelocity(t).normalized;
-	}
-
-	public float FreeSpan () {
-		return Vector3.Distance (points [0], points [3]);
-	}
-
-	//a special Unity method, which is called by the editor when the component is created or reset
-	//uses this as a default array of Vector3s
-	public void Reset () {
-		points = new Vector3[] {
-			new Vector3(1f, 0f, 0f),
-			new Vector3(2f, 0f, 0f),
-			new Vector3(3f, 0f, 0f),
-			new Vector3(4f, 0f, 0f)
-		};
 	}
 }

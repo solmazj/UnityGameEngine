@@ -69,7 +69,7 @@ public class ArchBuild : MonoBehaviour {
 		curveLength = clen;
 		//Print the height and free span of the arch
 		Debug.Log("The height of the arch is " + archHeight.ToString());
-		Debug.Log("The free span of the arch is " + wireArc.FreeSpan().ToString());
+		Debug.Log("The free span of the arch is " + wireArc.freeSpan.ToString());
 	}
 
 
