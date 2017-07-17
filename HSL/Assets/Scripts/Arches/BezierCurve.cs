@@ -18,6 +18,10 @@ public class BezierCurve : MonoBehaviour {
 		return GetVelocity(t).normalized;
 	}
 
+	public float FreeSpan () {
+		return Vector3.Distance (points [0], points [3]);
+	}
+
 	//a special Unity method, which is called by the editor when the component is created or reset
 	//uses this as a default array of Vector3s
 	public void Reset () {

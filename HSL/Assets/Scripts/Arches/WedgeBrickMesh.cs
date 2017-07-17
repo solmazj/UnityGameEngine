@@ -2,15 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
-[ExecuteInEditMode]
+
 public class WedgeBrickMesh : MonoBehaviour {
 
-	public float innerLength, outerLength, height, depth;
-	public Material material;
+	float innerLength, outerLength, height, depth;
+	public Material mat;
 
+	//need this to call from ArchBuild, don't know if actually need to access this value
+	public float InnerLength {
+		get { return innerLength; }
+	}
 
-	void Start () {
+	public void SetInnerLength (string value) {
+		innerLength = ConditionCheck (value);
+		CreateMesh ();
+	}
+
+	public void SetOuterLength (string value) {
+		outerLength = ConditionCheck (value);
+		CreateMesh ();
+	}
+
+	public void SetHeight (string value) {
+		height = ConditionCheck(value);
+		CreateMesh ();
+	}
+
+	public void SetDepth (string value) {
+		depth =  ConditionCheck(value);
+		CreateMesh ();
+	}
+
+	float ConditionCheck (string input) 
+	{
+		if (String.IsNullOrEmpty(input)) {return 0.1f;}
+
+		float output = float.Parse (input);
+		return output;
+	}
+
+	void CreateMesh () {
 		//check if the object that the script is attached to is an empty object
 		if (GetComponent<MeshFilter> () == null) {
 			gameObject.AddComponent<MeshFilter> ();
@@ -86,7 +119,7 @@ public class WedgeBrickMesh : MonoBehaviour {
 		mesh.RecalculateBounds();
 
 		//assign the material+texture, and finally assign the mesh to the object
-		GetComponent<MeshRenderer> ().material = material;
+		GetComponent<MeshRenderer> ().material = mat;
 		GetComponent<MeshFilter>().mesh = mesh;
 	}
 }

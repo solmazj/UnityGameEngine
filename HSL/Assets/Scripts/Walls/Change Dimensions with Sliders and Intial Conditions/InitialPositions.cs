@@ -17,7 +17,7 @@ public class InitialPositions : MonoBehaviour
 		wall = this.gameObject;
 	}
 
-	//always runs on update, even in edit mode
+	//always runs on update, even in edit mode. NOT THE BEST PRACTICE
 	void Update () 
 	{
 		//If attached to a wall-to-be cube and plane as a ground at a point (x,0,z)
