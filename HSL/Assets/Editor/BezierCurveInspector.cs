@@ -24,10 +24,12 @@ public class BezierCurveInspector : Editor {
 			handleTransform.rotation : Quaternion.identity;
 
 		//showing the control points
-		Vector3 p0 = ShowPoint(0);
 		Vector3 p1 = ShowPoint(1);
 		Vector3 p2 = ShowPoint(2);
-		Vector3 p3 = ShowPoint(3);
+
+		//defining other 2 vectors
+		Vector3 p0 = curve.points[0];
+		Vector3 p3 = curve.points[3];
 
 		//handles for 2 middle control points
 		Handles.color = Color.gray;

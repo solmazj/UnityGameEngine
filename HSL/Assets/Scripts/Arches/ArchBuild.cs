@@ -15,6 +15,16 @@ public class ArchBuild : MonoBehaviour {
 	float curveLength, archHeight,  innerBrickLength;
 	GameObject prefab;
 
+	//how about tagging newly created bricks, and the arch itself
+	public void BuildAVault () {
+		BuildAnArch ();
+		for (int rows = 1; rows < archDepth / brickDepth; rows++) {
+			GameObject arch = Instantiate (GameObject.FindGameObjectWithTag("Arch")) as GameObject;
+			arch.transform.position = new Vector3 (arch.transform.position.x, arch.transform.position.y,  arch.transform.position.z + rows * brickDepth);
+		}
+	}
+
+
 	public void BuildAnArch () {
 		//stop if the input is missing
 		if (wireArc == null) {
@@ -86,7 +96,7 @@ public class ArchBuild : MonoBehaviour {
 		//create empty prefab, and destroy the empty gameobject
 		GameObject sampleBrick = new GameObject("SampleBrick");
 		prefab = PrefabUtility.CreatePrefab ("Assets/Resources/WedgedBrick.prefab", sampleBrick);
-//		Destroy (sampleBrick); 
+		Destroy (sampleBrick); 
 		//add the mesh component
 		WedgeBrickMesh mesh = prefab.AddComponent<WedgeBrickMesh> ();
 		mesh.CreateMesh (innerBrickLength, outerBrickLength, archThickness, brickDepth, "Brick");

@@ -7,7 +7,7 @@ public class BezierCurve : MonoBehaviour {
 	[HideInInspector] //makes the variable public, but not visible in the Inspector
 	public Vector3[] points;
 
-
+	//need to work on this, on how the arc is presented in the scene view
 	public void ArchInfoReady () {
 		if (freeSpan <= 0 || archHeight <= 0) {
 			Debug.Log ("Inapplicable input values");
