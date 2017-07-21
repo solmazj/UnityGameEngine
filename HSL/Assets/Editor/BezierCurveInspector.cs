@@ -23,22 +23,12 @@ public class BezierCurveInspector : Editor {
 		handleRotation = Tools.pivotRotation == PivotRotation.Local ?
 			handleTransform.rotation : Quaternion.identity;
 
-		//showing the control points
-		Vector3 p1 = ShowPoint(1);
-		Vector3 p2 = ShowPoint(2);
-
-		//defining other 2 vectors
-		Vector3 p0 = curve.points[0];
-		Vector3 p3 = curve.points[3];
-
-		//handles for 2 middle control points
-		Handles.color = Color.gray;
-		Handles.DrawLine(p0, p1);
-		Handles.DrawLine(p2, p3);
+//		Vector3 p0 = ShowPoint (0);
 
 		//drawing the wire arc
-		Handles.DrawBezier(p0, p3, p1, p2, Color.red, null, 2f);
-		//ShowDirections();
+		Handles.DrawBezier(curve.points[0], curve.points[3], curve.points[1], curve.points[2], Color.red, null, 2f);
+
+//		ShowDirections();
 	}
 
 	//shows "velocity"
@@ -54,6 +44,7 @@ public class BezierCurveInspector : Editor {
 		}
 	}
 
+	//shows the control points[index] on the scene view, and they become free to edit
 	private Vector3 ShowPoint (int index) {
 		//transforms position from local to world space
 		Vector3 point = handleTransform.TransformPoint(curve.points[index]);

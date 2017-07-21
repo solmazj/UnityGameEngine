@@ -9,16 +9,17 @@ public class ArchBuild : MonoBehaviour {
 
 	public BezierCurve wireArc;
 	public int numberOfBricks = 25;
-	public int steps = 100;
-	public float archThickness, brickDepth, archDepth;
+	public float archThickness, brickDepth, vaultDepth;
+	int steps = 100;
 	float[] arcLengths;
-	float curveLength, archHeight,  innerBrickLength;
+	float curveLength,  innerBrickLength;
+//	float archHeight;
 	GameObject prefab;
 
 	//how about tagging newly created bricks, and the arch itself
 	public void BuildAVault () {
 		BuildAnArch ();
-		for (int rows = 1; rows < archDepth / brickDepth; rows++) {
+		for (int rows = 1; rows < vaultDepth / brickDepth; rows++) {
 			GameObject arch = Instantiate (GameObject.FindGameObjectWithTag("Arch")) as GameObject;
 			arch.transform.position = new Vector3 (arch.transform.position.x, arch.transform.position.y,  arch.transform.position.z + rows * brickDepth);
 		}
@@ -65,11 +66,12 @@ public class ArchBuild : MonoBehaviour {
 		float ox = wireArc.GetPoint(0).x, oy = wireArc.GetPoint(0).y, clen = 0;
 		arcLengths [0] = clen;
 		//iterative calculation of points along the curve and the arc lengths
+		float increment = 1f/steps;
 		for (int i = 1; i <= steps; i++) {
-			float increment = 1f/steps, x = wireArc.GetPoint(i * increment).x, y = wireArc.GetPoint(i * increment).y;
-			if (y > oy) {
-				archHeight = y;
-			}
+			float x = wireArc.GetPoint(i * increment).x, y = wireArc.GetPoint(i * increment).y;
+//			if (y > oy) {
+//				archHeight = y;
+//			}
 			float dx = ox - x, dy = oy - y;
 			clen += Mathf.Sqrt (dx * dx + dy * dy);
 			arcLengths [i] = clen;
@@ -77,9 +79,6 @@ public class ArchBuild : MonoBehaviour {
 		}
 		//total curve length, also equal to arcLengths[len]
 		curveLength = clen;
-		//Print the height and free span of the arch
-		Debug.Log("The height of the arch is " + archHeight.ToString());
-		Debug.Log("The free span of the arch is " + wireArc.freeSpan.ToString());
 	}
 
 

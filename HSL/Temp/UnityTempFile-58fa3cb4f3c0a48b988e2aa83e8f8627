@@ -88,10 +88,10 @@
 -define:UNITY_EDITOR_OSX
 -define:ENABLE_NATIVE_ARRAY_CHECKS
 -define:UNITY_TEAM_LICENSE
-'Assets/Scripts/Arches/ArchBuild.cs'
-'Assets/Scripts/Arches/Bezier.cs'
-'Assets/Scripts/Arches/BezierCurve.cs'
-'Assets/Scripts/Arches/WedgeBrickMesh.cs'
+'Assets/Scripts/Circular Arches/ArchBuild.cs'
+'Assets/Scripts/Circular Arches/Bezier.cs'
+'Assets/Scripts/Circular Arches/BezierCurve.cs'
+'Assets/Scripts/Circular Arches/WedgeBrickMesh.cs'
 'Assets/Scripts/Walls/Change Dimensions with Sliders and Intial Conditions/ChangeLengthSlider.cs'
 'Assets/Scripts/Walls/Change Dimensions with Sliders and Intial Conditions/InitialPositions.cs'
 'Assets/Scripts/Walls/Change Dimensions with Sliders and Intial Conditions/ValueUpdate.cs'
