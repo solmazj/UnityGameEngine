@@ -7,7 +7,7 @@ public class BezierCurve : MonoBehaviour {
 	//left over from previous input? Need to work on this
 	[HideInInspector] //makes it public, yet not displayed in the Inspector
 	public Vector3[] points;
-	float freeSpan, archHeight, angle;
+	float freeSpan = -1f, archHeight = -1f, angle;
 
 	public void SetFreeSpan (string input) {
 		freeSpan = ConditionCheck(input);
@@ -18,14 +18,10 @@ public class BezierCurve : MonoBehaviour {
 		archHeight = ConditionCheck(input);
 		BuildCurve ();
 	}
-	public void SetArcOfEmbrasuer (string input) {
-		angle = Mathf.Clamp(ConditionCheck(input), 0, 180);
-		BuildCurve ();
-	}
 
 	float ConditionCheck (string input) {
 		if (String.IsNullOrEmpty (input)) {
-			return 0f;
+			return -1f;
 		}
 		return float.Parse(input);
 	}
@@ -33,7 +29,7 @@ public class BezierCurve : MonoBehaviour {
 	//need to work on this, on how to present the arc in the scene view too
 	void BuildCurve () {
 		if (freeSpan <= 0 || archHeight < 0) {
-			Debug.Log ("Inapplicable input values");
+			Debug.Log ("Inapplicable input value(s), check input");
 		}
 		else {
 			//the case where angle is 0 degrees
@@ -84,3 +80,12 @@ public class BezierCurve : MonoBehaviour {
 		return (transform.TransformPoint(Bezier.GetFirstDerivative(points[0], points[1], points[2], points[3], t)) - transform.position).normalized;
 	}
 }
+
+/* in case angle and archHeight are provided, freeSpan can be calculated as 
+ * freeSpan = 2 * archHeight * Mathf.Sin(Mathf.Deg2Rad * angle / 2) / (1 - Mathf.Cos(Mathf.Deg2Rad * angle / 2));
+ * 
+ * and in case angle and freeSpan are provided, archHeight can be calculated as
+ * archHeight = (freeSpan / 2) * (1 - Mathf.Cos(Mathf.Deg2Rad * angle / 2)) / Mathf.Sin(Mathf.Deg2Rad * angle / 2);
+ * 
+ * These formulas should be incorporated in future, given any 2 of the 3 parameters, to be able to calculate
+ * the third one, build a wireArc from it, and print all the parameters in the console */

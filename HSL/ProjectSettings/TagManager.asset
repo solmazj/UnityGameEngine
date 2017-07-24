@@ -7,8 +7,8 @@ TagManager:
   - x
   - y
   - z
-  - brick
   - Arch
+  - Brick
   layers:
   - Default
   - TransparentFX

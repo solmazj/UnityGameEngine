@@ -18,7 +18,10 @@ public class ArchBuild : MonoBehaviour {
 	//how about tagging newly created bricks, and the arch itself
 	public void BuildAVault () {
 		BuildAnArch ();
-		//copy created arch over a few times
+		//centering the vault about the origin in z direction
+		GameObject.FindGameObjectWithTag("Arch").transform.position = new Vector3 (GameObject.FindGameObjectWithTag("Arch").transform.position.x,
+			GameObject.FindGameObjectWithTag("Arch").transform.position.y, -vaultDepth/2 + brickDepth);
+		//copy created arch over however many times needed
 		for (int rows = 1; rows < vaultDepth / brickDepth; rows++) {
 			GameObject arch = Instantiate (GameObject.FindGameObjectWithTag("Arch")) as GameObject;
 			arch.transform.position = new Vector3 (arch.transform.position.x, arch.transform.position.y,  arch.transform.position.z + rows * brickDepth);
@@ -33,6 +36,14 @@ public class ArchBuild : MonoBehaviour {
 			return;
 		}
 
+		//checking if the scene needs cleaning (if arch exists from before)
+		GameObject arch = GameObject.FindGameObjectWithTag ("Arch");
+		if (arch.transform.childCount > 0) {
+			for (int i = 0; i < arch.transform.childCount; i++) {
+				Destroy(arch.transform.GetChild (i).gameObject);
+			}
+		}
+
 		//do arc calcs
 		ArcLengthsCalc ();
 
@@ -44,15 +55,15 @@ public class ArchBuild : MonoBehaviour {
 	
 		//parameter u for the arc length is like t for the curve; it's between 0 and 1
 		float u = (innerBrickLength/2)/curveLength;
-		for (int i = 1; i <= numberOfBricks; i++){
-			Transform item = Instantiate(prefab.transform) as Transform;
-			Vector3 position = wireArc.GetPoint(Map (u));
+		for (int i = 1; i <= numberOfBricks; i++) {
+			Transform item = Instantiate (prefab.transform) as Transform;
+			Vector3 position = wireArc.GetPoint (Map (u));
 			item.transform.localPosition = position;
 			//align the bricks along the arc
-			item.transform.LookAt(position + wireArc.GetDirection(u));
+			item.transform.LookAt (position + wireArc.GetDirection (u));
 			//setting the object to which this script is attached as the parent of the created bricks
 			item.transform.parent = transform;
-			u += innerBrickLength/curveLength;
+			u += innerBrickLength / curveLength;
 		}
 	}
 
@@ -93,6 +104,7 @@ public class ArchBuild : MonoBehaviour {
 		Destroy (sampleBrick); 
 		//add the mesh component
 		WedgeBrickMesh mesh = prefab.AddComponent<WedgeBrickMesh> ();
+		//string Brick can be made into a parameter too, defines the texture
 		mesh.CreateMesh (innerBrickLength, outerBrickLength, archThickness, brickDepth, "Brick");
 	}
 
