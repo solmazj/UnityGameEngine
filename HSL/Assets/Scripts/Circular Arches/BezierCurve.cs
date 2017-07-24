@@ -44,7 +44,7 @@ public class BezierCurve : MonoBehaviour {
 			else {
 				float radius = (freeSpan * freeSpan / (8 * archHeight)) + (archHeight / 2);
 				angle = (2 * Mathf.Asin (freeSpan / (2 * radius))) * Mathf.Rad2Deg;
-			
+
 				if (172.5 < angle && angle <= 180)
 					inset = 0.05f;
 				else if (157.5 < angle && angle <= 172.5)
@@ -78,14 +78,9 @@ public class BezierCurve : MonoBehaviour {
 	public Vector3 GetPoint (float t) {
 		return transform.TransformPoint(Bezier.GetPoint(points[0], points[1], points[2], points[3], t));
 	}
-	
-	public Vector3 GetVelocity (float t) {
-		//velocity is affected by the position of the curve, so we need to have that subtraction present
-		return transform.TransformPoint(Bezier.GetFirstDerivative(points[0], points[1], points[2], points[3], t)) - transform.position;
-	}
 
 	//makes velocity vector's magnitude equal to one, so just shows the direction of the velocity
 	public Vector3 GetDirection (float t) {
-		return GetVelocity(t).normalized;
+		return (transform.TransformPoint(Bezier.GetFirstDerivative(points[0], points[1], points[2], points[3], t)) - transform.position).normalized;
 	}
 }
