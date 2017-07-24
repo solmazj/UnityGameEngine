@@ -13,12 +13,12 @@ public class ArchBuild : MonoBehaviour {
 	int steps = 100;
 	float[] arcLengths;
 	float curveLength,  innerBrickLength;
-//	float archHeight;
 	GameObject prefab;
 
 	//how about tagging newly created bricks, and the arch itself
 	public void BuildAVault () {
 		BuildAnArch ();
+		//copy created arch over a few times
 		for (int rows = 1; rows < vaultDepth / brickDepth; rows++) {
 			GameObject arch = Instantiate (GameObject.FindGameObjectWithTag("Arch")) as GameObject;
 			arch.transform.position = new Vector3 (arch.transform.position.x, arch.transform.position.y,  arch.transform.position.z + rows * brickDepth);
@@ -36,7 +36,7 @@ public class ArchBuild : MonoBehaviour {
 		//do arc calcs
 		ArcLengthsCalc ();
 
-		//initialize the inner edge of the brick is along the arc
+		//the inner edge of the brick is along the arc
 		innerBrickLength = curveLength / numberOfBricks;
 
 		//make prefab bricks given the information about the arch thickness and the arc shape
@@ -46,9 +46,7 @@ public class ArchBuild : MonoBehaviour {
 		float u = (innerBrickLength/2)/curveLength;
 		for (int i = 1; i <= numberOfBricks; i++){
 			Transform item = Instantiate(prefab.transform) as Transform;
-			//Debug.Log (Map (u));
 			Vector3 position = wireArc.GetPoint(Map (u));
-			//Debug.Log (position);
 			item.transform.localPosition = position;
 			//align the bricks along the arc
 			item.transform.LookAt(position + wireArc.GetDirection(u));
@@ -69,9 +67,6 @@ public class ArchBuild : MonoBehaviour {
 		float increment = 1f/steps;
 		for (int i = 1; i <= steps; i++) {
 			float x = wireArc.GetPoint(i * increment).x, y = wireArc.GetPoint(i * increment).y;
-//			if (y > oy) {
-//				archHeight = y;
-//			}
 			float dx = ox - x, dy = oy - y;
 			clen += Mathf.Sqrt (dx * dx + dy * dy);
 			arcLengths [i] = clen;

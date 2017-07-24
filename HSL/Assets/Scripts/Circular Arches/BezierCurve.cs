@@ -1,19 +1,41 @@
 ﻿using UnityEngine;
-[ExecuteInEditMode]
+using System;
+//IN PROGRESS. Works with given height and free span only, for now
+//[ExecuteInEditMode]
 public class BezierCurve : MonoBehaviour {
-
-	public float freeSpan;
-	public float archHeight;
-	[HideInInspector] //makes the variable public, but not visible in the Inspector
+	//what happens if someone just turns off the toggle, but the value for the parameters is 
+	//left over from previous input? Need to work on this
+	[HideInInspector] //makes it public, yet not displayed in the Inspector
 	public Vector3[] points;
+	float freeSpan, archHeight, angle;
 
-	//need to work on this, on how the arc is presented in the scene view and not Awake
-	void Awake () {
+	public void SetFreeSpan (string input) {
+		freeSpan = ConditionCheck(input);
+		BuildCurve ();
+	}
+
+	public void SetArchHeight (string input) {
+		archHeight = ConditionCheck(input);
+		BuildCurve ();
+	}
+	public void SetArcOfEmbrasuer (string input) {
+		angle = Mathf.Clamp(ConditionCheck(input), 0, 180);
+		BuildCurve ();
+	}
+
+	float ConditionCheck (string input) {
+		if (String.IsNullOrEmpty (input)) {
+			return 0f;
+		}
+		return float.Parse(input);
+	}
+
+	//need to work on this, on how to present the arc in the scene view too
+	void BuildCurve () {
 		if (freeSpan <= 0 || archHeight < 0) {
 			Debug.Log ("Inapplicable input values");
 		}
 		else {
-			float angle;
 			//the case where angle is 0 degrees
 			float inset = 0.5f;
 
