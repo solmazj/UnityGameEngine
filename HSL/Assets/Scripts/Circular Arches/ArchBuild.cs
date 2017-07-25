@@ -12,7 +12,7 @@ public class ArchBuild : MonoBehaviour {
 	int steps = 100;
 	float[] arcLengths;
 	float curveLength,  innerBrickLength, outerBrickLength;
-	GameObject prefab, halfPrefab;
+	GameObject prefab, halfPrefab, halfDepthPrefab;
 	BezierCurve wireArc;
 
 	void PreliminaryCalc () { 
@@ -33,6 +33,7 @@ public class ArchBuild : MonoBehaviour {
 		//make prefab bricks given the information about the arch thickness and the arc shape
 		BuildFullBrick ();
 		BuildHalfBrick ();
+		BuildHalfDepthBrick ();
 	}
 
 
@@ -73,6 +74,122 @@ public class ArchBuild : MonoBehaviour {
 				EvenRow().transform.position = new Vector3 (0, 0, -vaultDepth/2 + (row * brickDepth));
 			}
 		}
+	}
+
+
+	public void BuildTravZipVault () {
+		if (vaultDepth <= brickDepth) {
+			BuildAnArch (); //ignores the given vault depth and builds it with brick depth, ask Becca if she wants it differently 
+			return;
+		}
+
+		PreliminaryCalc ();
+		FirstRow ().transform.position = new Vector3 (0, 0, vaultDepth/2);
+		for (int i = 1; i <= (vaultDepth/brickDepth - 1.5); i++) {
+			IntermediateRow ().transform.position = new Vector3 (0, 0, vaultDepth / 2 - i * brickDepth);
+		}
+		LastRow ().transform.position = new Vector3 (0, 0, -vaultDepth/2 + brickDepth/2);
+	}
+
+
+	GameObject FirstRow () {
+		//creating a parent  gameobject
+		GameObject parent = new GameObject("FirstArch");
+		parent.transform.tag = "Arch";
+		//parameter u for the arc length is like t for the curve; it's between 0 and 1
+		float u = (innerBrickLength/2)/curveLength;
+		int i = 1;
+		while (i <= numberOfBricks) {
+			Transform item = Instantiate (prefab.transform) as Transform;
+			Vector3 position = wireArc.GetPoint (Map (u));
+			item.transform.localPosition = position;
+			//align the bricks along the arc
+			item.transform.LookAt (position + wireArc.GetDirection (u));
+			//setting the object to which this script is attached as the parent of the created bricks
+			item.transform.parent = parent.transform;
+			u += innerBrickLength / curveLength;
+			i++;
+			if (i <= numberOfBricks) {
+				item = Instantiate (halfDepthPrefab.transform) as Transform;
+				position = wireArc.GetPoint (Map (u));
+				item.transform.localPosition = position;
+				//align the bricks along the arc
+				item.transform.LookAt (position + wireArc.GetDirection (u));
+				//setting the object to which this script is attached as the parent of the created bricks
+				item.transform.parent = parent.transform;
+				u += innerBrickLength / curveLength;
+				i++;
+			}
+		}
+		return parent;
+	}
+
+
+	GameObject IntermediateRow () {
+		//creating a parent  gameobject
+		GameObject parent = new GameObject("IntermediateArch");
+		parent.transform.tag = "Arch";
+		//parameter u for the arc length is like t for the curve; it's between 0 and 1
+		float u = (innerBrickLength/2)/curveLength;
+		int i = 1;
+		while (i <= numberOfBricks) {
+			Transform item = Instantiate (prefab.transform) as Transform;
+			Vector3 position = wireArc.GetPoint (Map (u));
+			item.transform.localPosition = position;
+			//align the bricks along the arc
+			item.transform.LookAt (position + wireArc.GetDirection (u));
+			//setting the object to which this script is attached as the parent of the created bricks
+			item.transform.parent = parent.transform;
+			u += innerBrickLength / curveLength;
+			i++;
+			if (i <= numberOfBricks) {
+				item = Instantiate (prefab.transform) as Transform;
+				position = wireArc.GetPoint (Map (u));
+				position.z += brickDepth / 2;
+				item.transform.localPosition = position;
+				//align the bricks along the arc
+				item.transform.LookAt (position + wireArc.GetDirection (u));
+				//setting the object to which this script is attached as the parent of the created bricks
+				item.transform.parent = parent.transform;
+				u += innerBrickLength / curveLength;
+				i++;
+			}
+		}
+		return parent;
+	}
+
+
+	GameObject LastRow () {
+		//creating a parent  gameobject
+		GameObject parent = new GameObject("LastArch");
+		parent.transform.tag = "Arch";
+		//parameter u for the arc length is like t for the curve; it's between 0 and 1
+		float u = (innerBrickLength/2)/curveLength;
+		int i = 1;
+		while (i <= numberOfBricks) {
+			Transform item = Instantiate (halfDepthPrefab.transform) as Transform;
+			Vector3 position = wireArc.GetPoint (Map (u));
+			item.transform.localPosition = position;
+			//align the bricks along the arc
+			item.transform.LookAt (position + wireArc.GetDirection (u));
+			//setting the object to which this script is attached as the parent of the created bricks
+			item.transform.parent = parent.transform;
+			u += innerBrickLength / curveLength;
+			i++;
+			if (i <= numberOfBricks) {
+				item = Instantiate (prefab.transform) as Transform;
+				position = wireArc.GetPoint (Map (u));
+				position.z += brickDepth / 2;
+				item.transform.localPosition = position;
+				//align the bricks along the arc
+				item.transform.LookAt (position + wireArc.GetDirection (u));
+				//setting the object to which this script is attached as the parent of the created bricks
+				item.transform.parent = parent.transform;
+				u += innerBrickLength / curveLength;
+				i++;
+			}
+		}
+		return parent;
 	}
 
 
@@ -182,6 +299,18 @@ public class ArchBuild : MonoBehaviour {
 		WedgeBrickMesh mesh = halfPrefab.AddComponent<WedgeBrickMesh> ();
 		//string Brick can be made into a parameter too, defines the texture
 		mesh.CreateMesh (innerBrickLength/2, outerBrickLength/2, archThickness, brickDepth, "Brick");
+	}
+
+
+	void BuildHalfDepthBrick () {
+		//create empty halfDepthPrefab, and destroy the empty gameobject
+		GameObject sampleBrick = new GameObject("SampleBrick");
+		halfDepthPrefab = PrefabUtility.CreatePrefab ("Assets/Resources/HalfDepthWedgedBrick.prefab", sampleBrick);
+		Destroy (sampleBrick); 
+		//add the mesh component
+		WedgeBrickMesh mesh = halfDepthPrefab.AddComponent<WedgeBrickMesh> ();
+		//string Brick can be made into a parameter too, defines the texture
+		mesh.CreateMesh (innerBrickLength, outerBrickLength, archThickness, brickDepth/2, "Brick");
 	}
 
 
