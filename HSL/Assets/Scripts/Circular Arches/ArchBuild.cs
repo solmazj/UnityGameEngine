@@ -16,20 +16,21 @@ public class ArchBuild : MonoBehaviour {
 	BezierCurve wireArc;
 
 	void PreliminaryCalc () { 
+
 		wireArc = this.gameObject.GetComponent<BezierCurve>();
 
-//		//checking if the scene needs cleaning (if arches exist from before)
-//		GameObject[] arches = GameObject.FindGameObjectsWithTag ("Arch");
-//		Debug.Log (arches.Length);
-//		for (int i = 1; i < arches.Length; i++) {
-//			Destroy (arches [i].gameObject);
-//		}
+		//checking if the scene needs cleaning (if arches exist from before)
+		GameObject[] arches = GameObject.FindGameObjectsWithTag ("Arch");
+		for (int i = 0; i < arches.Length; i++) {
+			Destroy (arches [i].gameObject);
+		}
 
 		//do arc calcs
 		ArcLengthsCalc ();
 
 		//the inner edge of the brick is along the arc
 		innerBrickLength = curveLength / numberOfBricks;
+		//make prefab bricks given the information about the arch thickness and the arc shape
 		BuildFullBrick ();
 		BuildHalfBrick ();
 	}
@@ -37,59 +38,41 @@ public class ArchBuild : MonoBehaviour {
 
 	public void BuildAnArch () {
 		PreliminaryCalc ();
-		//make prefab bricks given the information about the arch thickness and the arc shape
-		OddRaw ().transform.position = new Vector3 (0, 0, brickDepth/2);
+		//centering the created arch about the origin in z direction
+		OddRow ().transform.position = new Vector3 (0, 0, brickDepth/2);
 	}
 
 
 	public void BuildARegularVault () {
-//		BuildAnArch ();
-//		//centering the vault about the origin in z direction
-//		GameObject.FindGameObjectWithTag("Arch").transform.position = new Vector3 (GameObject.FindGameObjectWithTag("Arch").transform.position.x,
-//			GameObject.FindGameObjectWithTag("Arch").transform.position.y, -vaultDepth/2 + brickDepth);
-//		//copy created arch over however many times needed
-//		for (int rows = 1; rows < vaultDepth / brickDepth; rows++) {
-//			GameObject arch = Instantiate (GameObject.FindGameObjectWithTag("Arch")) as GameObject;
-//			arch.transform.position = new Vector3 (arch.transform.position.x, arch.transform.position.y,  arch.transform.position.z + rows * brickDepth);
-//		}
+		PreliminaryCalc ();
+		for (int row = 1; row <= vaultDepth / brickDepth; row++) {
+			OddRow ().transform.position = new Vector3 (0, 0, -vaultDepth / 2 + (row * brickDepth));
+		}
 	}
 
 
 	public void BuildLongZipVault () {
-//		BuildAnArch ();
-//		BuildHalfBrick ();
-//		//centering the vault about the origin in z direction
-//		GameObject oddArch = GameObject.FindGameObjectWithTag("Arch");
-//		oddArch.transform.position = new Vector3 (oddArch.transform.position.x,
-//			oddArch.transform.position.y, -vaultDepth/2 + brickDepth);
-//		GameObject evenArch = Instantiate (GameObject.FindGameObjectWithTag("Arch")) as GameObject;
-//		for (int i = 0; i < evenArch.transform.childCount; i++) {
-//			Destroy (evenArch.transform.GetChild (i).gameObject);
-//		}
-//		evenArch.transform.position = new Vector3 (oddArch.transform.position.x,
-//			oddArch.transform.position.y, -vaultDepth/2 + 2 * brickDepth);
-//		EvenRaw (evenArch);
-//
-//		int rows = 3;
-//		while (rows <= vaultDepth/brickDepth) {
-//			GameObject oddArch2 = Instantiate(oddArch) as GameObject;
-//			oddArch2.transform.position = new Vector3 (oddArch.transform.position.x,
-//				oddArch.transform.position.y, -vaultDepth/2 + rows * brickDepth);
-//			rows++;
-//			if (rows <= vaultDepth/brickDepth) {
-//				GameObject evenArch2 = Instantiate (evenArch) as GameObject;
-//				evenArch2.transform.position = new Vector3 (oddArch.transform.position.x,
-//					oddArch.transform.position.y, -vaultDepth/2 + rows * brickDepth);
-//				rows++;
-//			}
-//			else { 
-//				return;
-//			}
-//		}
+		if (vaultDepth <= brickDepth) {
+			BuildAnArch (); //ignores the given vault depth and builds it with brick depth, ask Becca if she wants it differently 
+			return;
+		}
+
+	
+		PreliminaryCalc ();
+		int row = 0;
+		//when calculating vaultDepth/brickDepth, it rounds it to int as in math
+		while (row < vaultDepth / brickDepth) {
+			row++;
+			OddRow().transform.position = new Vector3 (0, 0, -vaultDepth/2 + (row * brickDepth));
+			if (row <= vaultDepth / brickDepth) {
+				row++;
+				EvenRow().transform.position = new Vector3 (0, 0, -vaultDepth/2 + (row * brickDepth));
+			}
+		}
 	}
 
 
-	GameObject OddRaw () {
+	GameObject OddRow () {
 		//creating a parent  gameobject
 		GameObject parent = new GameObject("OddArch");
 		parent.transform.tag = "Arch";
@@ -109,7 +92,7 @@ public class ArchBuild : MonoBehaviour {
 	}
 
 
-	GameObject EvenRaw () {
+	GameObject EvenRow () {
 		//creating a parent  gameobject
 		GameObject parent = new GameObject("EvenArch");
 		parent.transform.tag = "Arch";
