@@ -9,29 +9,29 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1475227209684394}
+  m_RootGameObject: {fileID: 1748983527873248}
   m_IsPrefabParent: 1
---- !u!1 &1475227209684394
+--- !u!1 &1748983527873248
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4138261421100830}
+  - component: {fileID: 4668837780722810}
   m_Layer: 0
-  m_Name: WedgedBrick
+  m_Name: HalfDepthWedgedBrick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4138261421100830
+--- !u!4 &4668837780722810
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1475227209684394}
+  m_GameObject: {fileID: 1748983527873248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}

@@ -16,20 +16,20 @@ public class ArchBuild : MonoBehaviour {
 	BezierCurve wireArc;
 
 	void PreliminaryCalc () { 
-
-		wireArc = this.gameObject.GetComponent<BezierCurve>();
-
 		//checking if the scene needs cleaning (if arches exist from before)
 		GameObject[] arches = GameObject.FindGameObjectsWithTag ("Arch");
 		for (int i = 0; i < arches.Length; i++) {
 			Destroy (arches [i].gameObject);
 		}
 
+		wireArc = this.gameObject.GetComponent<BezierCurve>();
+
 		//do arc calcs
 		ArcLengthsCalc ();
 
 		//the inner edge of the brick is along the arc
 		innerBrickLength = curveLength / numberOfBricks;
+
 		//make prefab bricks given the information about the arch thickness and the arc shape
 		BuildFullBrick ();
 		BuildHalfBrick ();
@@ -44,6 +44,11 @@ public class ArchBuild : MonoBehaviour {
 
 
 	public void BuildARegularVault () {
+		if (vaultDepth <= brickDepth) {
+			BuildAnArch (); //ignores the given vault depth and builds it with brick depth, ask Becca if she wants it differently 
+			return;
+		}
+
 		PreliminaryCalc ();
 		for (int row = 1; row <= vaultDepth / brickDepth; row++) {
 			OddRow ().transform.position = new Vector3 (0, 0, -vaultDepth / 2 + (row * brickDepth));
@@ -56,8 +61,7 @@ public class ArchBuild : MonoBehaviour {
 			BuildAnArch (); //ignores the given vault depth and builds it with brick depth, ask Becca if she wants it differently 
 			return;
 		}
-
-	
+			
 		PreliminaryCalc ();
 		int row = 0;
 		//when calculating vaultDepth/brickDepth, it rounds it to int as in math
@@ -127,7 +131,7 @@ public class ArchBuild : MonoBehaviour {
 		return parent;
 	}
 
-			
+
 	void ArcLengthsCalc () {
 		//initialization
 		arcLengths = new float[steps + 1];
