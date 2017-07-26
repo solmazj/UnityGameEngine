@@ -4,16 +4,18 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using UnityEngine.UI;
+using System.Diagnostics;
+
 
 public class ArchBuild : MonoBehaviour {
 
 	public int numberOfBricks;
 	public float archThickness, brickDepth, vaultDepth;
+	BezierCurve wireArc;
 	int steps = 100;
 	float[] arcLengths;
 	float curveLength,  innerBrickLength, outerBrickLength;
 	GameObject prefab, halfPrefab, halfDepthPrefab;
-	BezierCurve wireArc;
 
 	void PreliminaryCalc () { 
 		//checking if the scene needs cleaning (if arches exist from before)
@@ -21,6 +23,32 @@ public class ArchBuild : MonoBehaviour {
 		for (int i = 0; i < arches.Length; i++) {
 			Destroy (arches [i].gameObject);
 		}
+
+		//throwing exeptions if invalid input for vaults only, so if arch is built, this piece of code is not executed
+		StackTrace stackTrace = new StackTrace();
+		if (stackTrace.GetFrame(1).GetMethod().Name != "BuildAnArch") {
+			if (vaultDepth <= brickDepth) {
+				//throws an error message and pauses the game
+				throw new Exception ("Vault depth cannot be less than brick depth. Check the input.");
+				/*alternatively, if the error and halting of the program is unwanted, this piece of code could be used;
+			it ignores the given vault depth and builds it with brick depth.
+			if (vaultDepth <= brickDepth) {
+//			if the vault depth should be used instead of brick depth, just execute the next line;
+//			brickDepth = vaultDepth;
+			BuildAnArch (); 
+			return;*/
+			}
+
+
+			//checks if division is a whole number or not. Alternatively, if the error and halting of the program is
+			//unwanted, something similar to changing the brick dimensions (could be manipulated through the wedge mesh)
+			//as in DrawWall in WallBuild where full rows and a fraction of a row is drawn, could be done.
+			float division = vaultDepth / brickDepth;
+			if(!Mathf.Approximately(division-Mathf.Round(division),0)) {
+				throw new Exception ("Vault depth has to be a multiple of brick depth. Check the input.");
+			}
+		}
+
 
 		wireArc = this.gameObject.GetComponent<BezierCurve>();
 
@@ -45,11 +73,6 @@ public class ArchBuild : MonoBehaviour {
 
 
 	public void BuildARegularVault () {
-		if (vaultDepth <= brickDepth) {
-			BuildAnArch (); //ignores the given vault depth and builds it with brick depth, ask Becca if she wants it differently 
-			return;
-		}
-
 		PreliminaryCalc ();
 		for (int row = 1; row <= vaultDepth / brickDepth; row++) {
 			OddRow ().transform.position = new Vector3 (0, 0, -vaultDepth / 2 + (row * brickDepth));
@@ -58,11 +81,6 @@ public class ArchBuild : MonoBehaviour {
 
 
 	public void BuildLongZipVault () {
-		if (vaultDepth <= brickDepth) {
-			BuildAnArch (); //ignores the given vault depth and builds it with brick depth, ask Becca if she wants it differently 
-			return;
-		}
-			
 		PreliminaryCalc ();
 		int row = 0;
 		//when calculating vaultDepth/brickDepth, it rounds it to int as in math
@@ -78,17 +96,14 @@ public class ArchBuild : MonoBehaviour {
 
 
 	public void BuildTravZipVault () {
-		if (vaultDepth <= brickDepth) {
-			BuildAnArch (); //ignores the given vault depth and builds it with brick depth, ask Becca if she wants it differently 
-			return;
-		}
-
 		PreliminaryCalc ();
 		FirstRow ().transform.position = new Vector3 (0, 0, vaultDepth/2);
+		int j = 1;
 		for (int i = 1; i <= (vaultDepth/brickDepth - 1.5); i++) {
 			IntermediateRow ().transform.position = new Vector3 (0, 0, vaultDepth / 2 - i * brickDepth);
+			j = i + 1;
 		}
-		LastRow ().transform.position = new Vector3 (0, 0, -vaultDepth/2 + brickDepth/2);
+		LastRow ().transform.position = new Vector3 (0, 0, vaultDepth/2 -  j * brickDepth);
 	}
 
 
@@ -249,26 +264,6 @@ public class ArchBuild : MonoBehaviour {
 	}
 
 
-	void ArcLengthsCalc () {
-		//initialization
-		arcLengths = new float[steps + 1];
-		//initial information
-		float ox = wireArc.GetPoint(0).x, oy = wireArc.GetPoint(0).y, clen = 0;
-		arcLengths [0] = clen;
-		//iterative calculation of points along the curve and the arc lengths
-		float increment = 1f/steps;
-		for (int i = 1; i <= steps; i++) {
-			float x = wireArc.GetPoint(i * increment).x, y = wireArc.GetPoint(i * increment).y;
-			float dx = ox - x, dy = oy - y;
-			clen += Mathf.Sqrt (dx * dx + dy * dy);
-			arcLengths [i] = clen;
-			ox = x; oy=y;
-		}
-		//total curve length, also equal to arcLengths[len]
-		curveLength = clen;
-	}
-
-
 	void BuildFullBrick () {
 		//calculating the outer length of the brick
 		float t1 = (innerBrickLength) / curveLength;
@@ -311,6 +306,26 @@ public class ArchBuild : MonoBehaviour {
 		WedgeBrickMesh mesh = halfDepthPrefab.AddComponent<WedgeBrickMesh> ();
 		//string Brick can be made into a parameter too, defines the texture
 		mesh.CreateMesh (innerBrickLength, outerBrickLength, archThickness, brickDepth/2, "Brick");
+	}
+
+
+	void ArcLengthsCalc () {
+		//initialization
+		arcLengths = new float[steps + 1];
+		//initial information
+		float ox = wireArc.GetPoint(0).x, oy = wireArc.GetPoint(0).y, clen = 0;
+		arcLengths [0] = clen;
+		//iterative calculation of points along the curve and the arc lengths
+		float increment = 1f/steps;
+		for (int i = 1; i <= steps; i++) {
+			float x = wireArc.GetPoint(i * increment).x, y = wireArc.GetPoint(i * increment).y;
+			float dx = ox - x, dy = oy - y;
+			clen += Mathf.Sqrt (dx * dx + dy * dy);
+			arcLengths [i] = clen;
+			ox = x; oy=y;
+		}
+		//total curve length, also equal to arcLengths[len]
+		curveLength = clen;
 	}
 
 
