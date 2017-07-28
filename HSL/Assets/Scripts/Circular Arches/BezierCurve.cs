@@ -7,7 +7,7 @@ using UnityEngine.UI;
 //[ExecuteInEditMode]
 public class BezierCurve : MonoBehaviour {
 
-	public Toggle archFreeSpan, theArchHeight, arcOfEmbrasure;
+	public InputField span, high, arc;
 	[HideInInspector] //makes it public, yet not displayed in the Inspector
 	public Vector3[] points;
 	Boolean fs, height, embrasure;
@@ -54,36 +54,41 @@ public class BezierCurve : MonoBehaviour {
 		}
 		return float.Parse(input);
 	}
-
-	public void ToggleChange (bool anything) {
+		
+	public void ArchFreeSpan (bool isOn) {
+		if (!isOn) {
+			SetFreeSpan ("");
+			Debug.Log ("I am in ArchFreeSpan " + fs);
+		}
 		CheckUp ();
 	}
 
-	void CheckUp () {
-		
-		if (!archFreeSpan.isOn) {
-			SetFreeSpan ("");
-			Debug.Log (fs);
+	public void TheArchHeight (bool isOn) {
+		if (!isOn) {
+			SetArchHeight ("");
+			Debug.Log ("I am in TheArchHeight " + height);
 		}
-		if (!theArchHeight.isOn)
-				SetArchHeight ("");
-		if (!arcOfEmbrasure.isOn)
-				SetArcOfEmbrasure ("");
-		
+		CheckUp ();
+	}
+
+	public void ArcOfEmbrasure (bool isOn) {
+		if (!isOn) {
+			SetArcOfEmbrasure ("");
+			Debug.Log ("I am in ArcOfEmbrasure " + embrasure);
+		}
+		CheckUp ();
+	}
+
+
+	void CheckUp () {
 		//if no parameter is provided
 		if (!fs && !height && !embrasure) {
 			Debug.Log ("None is given");
-			Debug.Log ("The free span of the arch is " + freeSpan.ToString ("n2"));
-			Debug.Log ("The height of the arch is " + archHeight.ToString ("n2"));
-			Debug.Log ("The arc of embrasure is " + angle.ToString ("n2") + " degrees");
 			return;
 		} 
 		//if only one parameter is provided
 		else if ((fs && !height && !embrasure) || (!fs && height && !embrasure) || (!fs && !height && embrasure)) {
 			Debug.Log ("Only one is given");
-			Debug.Log ("The free span of the arch is " + freeSpan.ToString ("n2"));
-			Debug.Log ("The height of the arch is " + archHeight.ToString ("n2"));
-			Debug.Log ("The arc of embrasure is " + angle.ToString ("n2") + " degrees");
 			return;
 		} 
 		//if two parameters are provided
@@ -124,13 +129,29 @@ public class BezierCurve : MonoBehaviour {
 				new Vector3 (freeSpan / 2 - freeSpan * inset, archHeight / 0.75f, 0f),
 				new Vector3 (freeSpan / 2, 0f, 0f)
 			};
-			//Print the free span, height and arc of embrasure of the modeled arch
-			Debug.Log ("The free span of the arch is " + freeSpan.ToString ("n2"));
-			Debug.Log ("The height of the arch is " + archHeight.ToString ("n2"));
-			Debug.Log ("The arc of embrasure is " + angle.ToString ("n2") + " degrees");
+			PrintingParameters ();
 		}
 	}
 
+
+	void PrintingParameters () {
+		//Print the free span, height and arc of embrasure of the modeled arch
+//		if (!fs)
+//			span.text = ("");
+//		else
+//			span.text = freeSpan.ToString ("n2");
+//		if (!height)
+//			high.text = ("");
+//		else
+//			high.text = archHeight.ToString ("n2");
+//		if (!embrasure)
+//			arc.text = ("");
+//		else
+//			arc.text = angle.ToString ("n2");
+		Debug.Log ("The free span of the arch is " + freeSpan.ToString ("n2"));
+		Debug.Log ("The height of the arch is " + archHeight.ToString ("n2"));
+		Debug.Log ("The arc of embrasure is " + angle.ToString ("n2") + " degrees");
+	}
 
 	void AngleCalc () {
 		if (freeSpan <= 0 || archHeight < 0) {

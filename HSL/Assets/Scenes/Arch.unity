@@ -908,7 +908,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 838243766}
-        m_MethodName: ToggleChange
+        m_MethodName: TheArchHeight
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -949,9 +949,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b6b4e22427e4efbb847bd026324e59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  archFreeSpan: {fileID: 896947288}
-  theArchHeight: {fileID: 747933785}
-  arcOfEmbrasure: {fileID: 1254658655}
+  span: {fileID: 1279435810}
+  high: {fileID: 881602627}
+  arc: {fileID: 1273233564}
   points:
   - {x: -6, y: 0, z: 0}
   - {x: -5.4, y: 8, z: 0}
@@ -1381,7 +1381,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 838243766}
-        m_MethodName: ToggleChange
+        m_MethodName: ArchFreeSpan
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2016,7 +2016,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.21}
+  m_AnchoredPosition: {x: 0, y: -0.20999998}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1254658655
@@ -2073,7 +2073,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 838243766}
-        m_MethodName: ToggleChange
+        m_MethodName: ArcOfEmbrasure
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2279,7 +2279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 156.4068, y: 0.9000296}
+  m_AnchoredPosition: {x: 156.4068, y: 0.90002966}
   m_SizeDelta: {x: 180, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1279435809
