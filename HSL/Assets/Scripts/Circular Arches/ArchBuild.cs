@@ -58,7 +58,7 @@ public class ArchBuild : MonoBehaviour {
 
 		if (!wireArc.agree)
 			throw new Exception ("The three input parameters do not agree with each other. Check input or input only two parameters, the third one will be calculated automatically.");
-		
+
 		//do arc calcs
 		ArcLengthsCalc ();
 
@@ -198,18 +198,18 @@ public class ArchBuild : MonoBehaviour {
 			item.transform.parent = parent.transform;
 			u += 2 * innerBrickLength / curveLength;
 			i += 2;
-//			if (i <= numberOfBricks) {
-//				item = Instantiate (prefab.transform) as Transform;
-//				position = wireArc.GetPoint (Map (u));
-//				position.z += brickDepth / 2;
-//				item.transform.localPosition = position;
-//				//align the bricks along the arc
-//				item.transform.LookAt (position + wireArc.GetDirection (u));
-//				//setting the object to which this script is attached as the parent of the created bricks
-//				item.transform.parent = parent.transform;
-//				u += innerBrickLength / curveLength;
-//				i++;
-//			}
+			//			if (i <= numberOfBricks) {
+			//				item = Instantiate (prefab.transform) as Transform;
+			//				position = wireArc.GetPoint (Map (u));
+			//				position.z += brickDepth / 2;
+			//				item.transform.localPosition = position;
+			//				//align the bricks along the arc
+			//				item.transform.LookAt (position + wireArc.GetDirection (u));
+			//				//setting the object to which this script is attached as the parent of the created bricks
+			//				item.transform.parent = parent.transform;
+			//				u += innerBrickLength / curveLength;
+			//				i++;
+			//			}
 		}
 		return parent;
 	}
