@@ -8,19 +8,18 @@ using UnityEngine.UI;
 //attaches to the modeled brick
 /*Row is rows seen from the front (x-y plane), Lane is rows seen from the top (x-z plane)
 the constant numbers correspond to the cases when InitialPositions script is enabled*/
-public class WallBuild : MonoBehaviour {
+public class Abutments : MonoBehaviour {
 
-	public GameObject wall;
-	public Text brickCount;
-	GameObject modeledBrick, prefab;
-	float brickLength, brickHeight, brickDepth, wallLength, wallHeight, wallDepth, topHeight;
+//	public GameObject wall;
+	GameObject prefab; //modeledBrick,
+	public float brickLength, brickHeight, brickDepth, wallLength, wallHeight, wallDepth, topHeight;
 	List<GameObject> goList;
 
 
 
 	void Awake () {
 		//initiations
-		modeledBrick = this.gameObject;
+//		modeledBrick = this.gameObject;
 		goList = new List<GameObject>();
 	}
 
@@ -36,36 +35,30 @@ public class WallBuild : MonoBehaviour {
 		}
 		goList.Clear ();
 		//global variables assigned
-		brickLength = modeledBrick.transform.localScale.x;
-		brickHeight = modeledBrick.transform.localScale.y;
-		brickDepth = modeledBrick.transform.localScale.z;
-		wallLength = wall.transform.localScale.x;
-		wallHeight = wall.transform.localScale.y;
-		wallDepth = wall.transform.localScale.z;
-	
+
+
 		if (wallDepth <= brickDepth) {
 			prefab.transform.localScale = new Vector3 (prefab.transform.localScale.x,
 				prefab.transform.localScale.y, wallDepth);
-			DrawOddLane (new Vector3((-wallLength + brickLength) / 2, brickHeight / 2, 0));
+			DrawOddLane (new Vector3 ((-wallLength + brickLength) / 2, brickHeight / 2, 0));
 		} else {
 			DrawWall (new Vector3 ((-wallLength + brickLength) / 2, brickHeight / 2, (-wallDepth + brickDepth) / 2));
 		}
-		BrickCount ();
 		//default wall disappears after you change it the first time
-		wall.SetActive (false);
+//		wall.SetActive (false);
 	}
 
 	void CreatePrefabBrick () {
 		//creates a prefab with the given dimensions and color
 		GameObject brick = GameObject.CreatePrimitive(PrimitiveType.Cube);
-		brick.transform.localScale = modeledBrick.transform.localScale;
-		PrefabUtility.CreatePrefab ("Assets/Resources/WallBrick.prefab", brick);
+		brick.transform.localScale = new Vector3 (brickLength, brickHeight, brickDepth);
+		PrefabUtility.CreatePrefab ("Assets/Resources/AbutmentBrick.prefab", brick);
 		Destroy (brick);
 		/*because it is a prefab, if the color of the modeled brick changes, the prefab color
 		changes too even if this method is not called (in this case, even if button is not pressed*/
-		Material mat = modeledBrick.GetComponent<Renderer> ().material;
-		prefab = Resources.Load ("WallBrick") as GameObject;
-		prefab.GetComponent<Renderer> ().material = mat;
+//		Material mat = modeledBrick.GetComponent<Renderer> ().material;
+		prefab = Resources.Load ("AbutmentBrick") as GameObject;
+		prefab.GetComponent<Renderer> ().material = Resources.Load("Brick") as Material;
 	}
 
 
@@ -105,10 +98,10 @@ public class WallBuild : MonoBehaviour {
 			brick.transform.localScale = new Vector3 ((wallLength - 2 * position.x), 
 				topHeight, prefab.transform.localScale.z);
 		}
-			else {
-				brick.transform.localScale = new Vector3 ((wallLength - 2 * position.x), 
+		else {
+			brick.transform.localScale = new Vector3 ((wallLength - 2 * position.x), 
 				prefab.transform.localScale.y, prefab.transform.localScale.z);
-			}
+		}
 		return brick;
 	}
 
@@ -205,8 +198,8 @@ public class WallBuild : MonoBehaviour {
 	void DrawWall (Vector3 position) {
 		while ((wallDepth - 2 * position.z) >= brickDepth)
 		{
-				DrawOddLane (position);
-				position.z += brickDepth;
+			DrawOddLane (position);
+			position.z += brickDepth;
 			if ((wallDepth - 2 * position.z) < brickDepth) {
 				//change the depth if whole brick depth does not fit and break
 				position.z = wallDepth/4 + position.z/2 - brickDepth/4;
@@ -227,9 +220,5 @@ public class WallBuild : MonoBehaviour {
 				return;
 			}
 		}
-	}
-
-	void BrickCount () {
-		brickCount.text = goList.Count.ToString ();
 	}
 }
