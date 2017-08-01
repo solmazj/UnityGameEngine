@@ -10,7 +10,7 @@ using UnityEngine.UI;
 the constant numbers correspond to the cases when InitialPositions script is enabled*/
 public class Abutments : MonoBehaviour {
 
-	BezierCurve wireArc;
+
 	GameObject prefab;
 	public float brickLength, brickHeight, brickDepth, wallLength, wallHeight, wallDepth;
 	float topHeight;
@@ -18,37 +18,36 @@ public class Abutments : MonoBehaviour {
 	GameObject parent;
 
 
-	void Awake () {
-		//initiations
-		wireArc = this.gameObject.GetComponent<BezierCurve>();
-	}
-
 	public void SetAbutmentPositions(float pos) {
 		leftPoint = pos;
+//		BuildAbutment ();
 	}
 
 
 	public void BuildAbutment () {
+		//cleaning the objects created before
+		GameObject[] abutments = GameObject.FindGameObjectsWithTag ("Abutment");
+		for (int i = 0; i < abutments.Length; i++) {
+			Destroy (abutments [i].gameObject);
+		}
+
 		//position will be (0,0,0) anyway
-		parent = new GameObject ("Abutment");
+		parent = new GameObject("Abutment");
+		parent.transform.tag = "Abutment";
+			
 
 		//activated when Populate the Wall button is clicked
 		CreatePrefabBrick();
-
-		//cleaning the objects created before
-		GameObject[] bricks = GameObject.FindGameObjectsWithTag ("Brick");
-		for (int i = 0; i < bricks.Length; i++) {
-			Destroy (bricks [i].gameObject);
-		}
 
 		if (wallDepth <= brickDepth) {
 			throw new Exception ("Abutment depth cannot be less than the abutment brick depth.");
 		} else {
 			//create the left abutment
 			DrawWall (new Vector3 ((leftPoint - wallLength + brickLength / 2), brickHeight / 2, (-wallDepth + brickDepth) / 2));
+
 			//copy the left abutment over to the right side
 			GameObject rightAbutment = Instantiate (parent) as GameObject;
-			rightAbutment.transform.position = new Vector3 (wallLength + (wireArc.points [3].x - wireArc.points [0].x), 
+			rightAbutment.transform.position = new Vector3 (wallLength + Mathf.Abs(leftPoint) * 2, 
 				parent.transform.position.y, parent.transform.position.z);
 		}
 	}
@@ -126,12 +125,12 @@ public class Abutments : MonoBehaviour {
 		position.x = position.x - brickLength / 4;
 		DrawHalfBrick (position);
 		position.x += 3 * brickLength/ 4;
-		while (position.x < leftPoint) 
-		{
+		while (position.x < leftPoint) {
 			DrawBrick (position);
 			position.x += brickLength;
 		}
-		if (position.x - leftPoint < brickLength/2) 
+		//draw end brick if one can is needed
+			if (position.x <= leftPoint && Mathf.Abs(position.x - leftPoint) < brickLength/2) 
 		{
 			position.x = 3 * position.x / 2 - brickLength / 4- leftPoint / 2; 
 			DrawEndBrick (position);

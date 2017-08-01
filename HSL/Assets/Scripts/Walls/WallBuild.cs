@@ -30,7 +30,7 @@ public class WallBuild : MonoBehaviour {
 		CreatePrefabBrick();
 		//cleaning the objects created before
 		foreach (GameObject brick in goList) {
-			if (brick != null && brick.tag == "brick") {
+			if (brick != null && brick.tag == "Brick") {
 				Destroy (brick);
 			}
 		}
@@ -74,7 +74,7 @@ public class WallBuild : MonoBehaviour {
 		GameObject brick = Instantiate (prefab) as GameObject;
 		brick.transform.position = position;
 		//tag name needs to be defined (added into tags) before runtime
-		brick.tag = "brick"; 
+		brick.tag = "Brick"; 
 		//if on last row, need to change the height, aka scale
 		if (topHeight != brickHeight) {
 			brick.transform.localScale = new Vector3 (brick.transform.localScale.x, topHeight,
