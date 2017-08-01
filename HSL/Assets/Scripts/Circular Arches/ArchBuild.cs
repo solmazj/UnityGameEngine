@@ -56,8 +56,9 @@ public class ArchBuild : MonoBehaviour {
 		if ((!wireArc.fs && !wireArc.height) || (!wireArc.fs && !wireArc.embrasure) || (!wireArc.height && !wireArc.embrasure) || (!wireArc.height && !wireArc.embrasure && !wireArc.fs))
 			throw new Exception ("Can not build an arch with less than two parameters. Check input.");
 
-		if (!wireArc.agree)
+		if (!wireArc.same) {
 			throw new Exception ("The three input parameters do not agree with each other. Check input or input only two parameters, the third one will be calculated automatically.");
+		}
 
 		//do arc calcs
 		ArcLengthsCalc ();

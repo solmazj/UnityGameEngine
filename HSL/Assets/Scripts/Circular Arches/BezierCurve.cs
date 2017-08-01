@@ -9,12 +9,17 @@ public class BezierCurve : MonoBehaviour {
 	[HideInInspector] //makes it public, yet not displayed in the Inspector
 	public Vector3[] points;
 	[HideInInspector]
-	public Boolean fs, height, embrasure, agree;
+	public bool fs, height, embrasure, same = true;
 	float freeSpan = -1f, archHeight = -1f, angle;
 	//the case where angle is 0 degrees
 	float inset = 0.5f;
+	float yPos = 0f;
 
-	
+	public void SetSpringLine (string bla) {
+		yPos = this.gameObject.GetComponent<Abutments> ().wallHeight;
+	}
+
+
 	public void SetFreeSpan (string input) {
 		freeSpan = ConditionCheck(input);
 		if (freeSpan != -1f)
@@ -76,23 +81,23 @@ public class BezierCurve : MonoBehaviour {
 
 	void CheckUp () {
 		//if no parameter is provided
-		if (!fs && !height && !embrasure) {
+		if (!fs && !height && !embrasure)
 			return;
-		} 
 		//if only one parameter is provided
-		else if ((fs && !height && !embrasure) || (!fs && height && !embrasure) || (!fs && !height && embrasure)) {
-			return;
-		} 
+		else if ((fs && !height && !embrasure) || (!fs && height && !embrasure) || (!fs && !height && embrasure))
+			return; 
 		//if all three are given, check if they mathematically agree with each other
 		else if (height && embrasure && fs) {
+			Debug.Log (height);
+			Debug.Log (embrasure);
+			Debug.Log (fs);
 			float inputAngle = angle;
 			AngleCalc ();
-			if (Mathf.Approximately (inputAngle, Mathf.Round(angle)))
-				agree = true;
+			if (!Mathf.Approximately (inputAngle, Mathf.Round(angle)))
+				same = false;
 		}
 		//if two parameters are provided
 		else {
-			
 			if (fs && height && !embrasure) {
 				AngleCalc ();
 			}
@@ -123,11 +128,12 @@ public class BezierCurve : MonoBehaviour {
 				inset = 0.275f;
 
 			points = new Vector3[] {
-				new Vector3 (-freeSpan / 2, 0f, 0f),
-				new Vector3 (-freeSpan / 2 + freeSpan * inset, archHeight / 0.75f, 0f),
-				new Vector3 (freeSpan / 2 - freeSpan * inset, archHeight / 0.75f, 0f),
-				new Vector3 (freeSpan / 2, 0f, 0f)
+				new Vector3 (-freeSpan / 2, yPos, 0f),
+				new Vector3 (-freeSpan / 2 + freeSpan * inset, archHeight / 0.75f + yPos, 0f),
+				new Vector3 (freeSpan / 2 - freeSpan * inset, archHeight / 0.75f + yPos, 0f),
+				new Vector3 (freeSpan / 2, yPos, 0f)
 			};
+			this.gameObject.GetComponent<Abutments> ().SetAbutmentPositions (-freeSpan / 2);
 			PrintingParameters ();
 		}
 	}
