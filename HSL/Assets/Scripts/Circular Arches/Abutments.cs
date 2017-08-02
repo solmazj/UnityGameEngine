@@ -31,12 +31,10 @@ public class Abutments : MonoBehaviour {
 			Destroy (abutments [i].gameObject);
 		}
 
-		//position will be (0,0,0) anyway
+		//creating a parent object. Position will be (0,0,0)
 		parent = new GameObject("Abutment");
 		parent.transform.tag = "Abutment";
 			
-
-		//activated when Populate the Wall button is clicked
 		CreatePrefabBrick();
 
 		if (wallDepth <= brickDepth) {
@@ -71,23 +69,23 @@ public class Abutments : MonoBehaviour {
 		brick.transform.position = position;
 		//tag name needs to be defined (added into tags) before runtime
 		brick.tag = "Brick"; 
-
 		brick.transform.parent = parent.transform;
 		//if on last row, need to change the height, aka scale
 		if (topHeight != brickHeight) {
-			brick.transform.localScale = new Vector3 (brickLength, topHeight, brickDepth);
+			brick.transform.localScale = new Vector3 (brick.transform.localScale.x, 
+				topHeight, brick.transform.localScale.z);
 		}
 		return brick;
 	}
-
+		
 
 	void DrawHalfBrick(Vector3 position) {
 		//creates a brick with half the length of the prefab with its center in the given position
 		GameObject brick = DrawBrick (position);
 		if (topHeight != brickHeight) {
-			brick.transform.localScale = new Vector3 (brickLength / 2, topHeight, brickDepth);
+			brick.transform.localScale = new Vector3 (brickLength / 2, topHeight, prefab.transform.localScale.z);
 		} else {
-			brick.transform.localScale = new Vector3 (brickLength / 2, brickHeight, brickDepth);
+			brick.transform.localScale = new Vector3 (brickLength / 2, prefab.transform.localScale.y, prefab.transform.localScale.z);
 		}
 	}
 
@@ -96,43 +94,42 @@ public class Abutments : MonoBehaviour {
 		//creates a brick for the end of the row
 		GameObject brick = DrawBrick (position);
 		if (topHeight != brickHeight) {
-			brick.transform.localScale = new Vector3 (Mathf.Abs(position.x - leftPoint) * 2, topHeight, brickDepth);
+			brick.transform.localScale = new Vector3 (Mathf.Abs(position.x - leftPoint) * 2, topHeight, prefab.transform.localScale.z);
 		}
 		else {
-			brick.transform.localScale = new Vector3 (Mathf.Abs(position.x - leftPoint) * 2, brickHeight, brickDepth);
+			brick.transform.localScale = new Vector3 (Mathf.Abs(position.x - leftPoint) * 2, prefab.transform.localScale.y, prefab.transform.localScale.z);
 		}
 	}
 
 
 	void DrawOddRow (Vector3 position) {
 		//position.x starts with negative numbers; populate as long as whole bricks fit
-		while (position.x < leftPoint) 
+		while (Mathf.Abs(position.x) - Mathf.Abs(leftPoint) >= brickLength/2) 
 		{
 			DrawBrick (position);
 			position.x += brickLength;
 		}
 		//draw end brick if one can is needed
-		if (position.x - leftPoint < brickLength/2) 
+		if (leftPoint + brickLength / 2 > position.x) 
 		{
-			position.x = 3 * position.x / 2 - brickLength / 4- leftPoint / 2; 
+			position.x = leftPoint / 2 + position.x / 2 - brickLength / 4; 
 			DrawEndBrick (position);
 		}
 	}
-
 
 	void DrawEvenRow (Vector3 position) {
 		//create half a brick first, and then repeat the process in DrawOddRow
 		position.x = position.x - brickLength / 4;
 		DrawHalfBrick (position);
 		position.x += 3 * brickLength/ 4;
-		while (position.x < leftPoint) {
+		while (Mathf.Abs(position.x) - Mathf.Abs(leftPoint) >= brickLength/2) {
 			DrawBrick (position);
 			position.x += brickLength;
 		}
 		//draw end brick if one can is needed
-			if (position.x <= leftPoint && Mathf.Abs(position.x - leftPoint) < brickLength/2) 
+		if (leftPoint + brickLength / 2 > position.x) 
 		{
-			position.x = 3 * position.x / 2 - brickLength / 4- leftPoint / 2; 
+			position.x = leftPoint / 2 + position.x / 2 - brickLength / 4; 
 			DrawEndBrick (position);
 		}
 	}
@@ -196,28 +193,25 @@ public class Abutments : MonoBehaviour {
 	void DrawWall (Vector3 position) {
 		while ((wallDepth - 2 * position.z) >= brickDepth)
 		{
-			Debug.Log ("drawing odd lane in the while loop");
 			DrawOddLane (position);
 			position.z += brickDepth;
-			if ((wallDepth - 2 * position.z) < brickDepth) {
+			if ((wallDepth-brickDepth) / 2 < position.z && position.z < (wallDepth + brickDepth) / 2) {
 				//change the depth if whole brick depth does not fit and break
 				position.z = wallDepth/4 + position.z/2 - brickDepth/4;
 				prefab.transform.localScale = new Vector3 (prefab.transform.localScale.x, 
 					prefab.transform.localScale.y, (wallDepth - 2 * position.z));
 				DrawEvenLane (position);
-				Debug.Log ("i am in the first if statement");
 				return;
 			} else if ((wallDepth - 2 * position.z) >= brickDepth) {
 				DrawEvenLane (position);
 				position.z += brickDepth;
 			}
-			if ((wallDepth - 2 * position.z) < brickDepth) {
+			if ((wallDepth-brickDepth) / 2 < position.z && position.z < (wallDepth + brickDepth) / 2) {
 				//change the depth if whole brick depth does not fit and break
 				position.z = wallDepth / 4 + position.z / 2 - brickDepth / 4;
 				prefab.transform.localScale = new Vector3 (prefab.transform.localScale.x, 
 					prefab.transform.localScale.y, (wallDepth - 2 * position.z)); 
 				DrawOddLane (position);
-				Debug.Log ("i am in the second if statement");
 				return;
 			}
 		}

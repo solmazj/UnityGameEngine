@@ -207,7 +207,7 @@ public class WallBuild : MonoBehaviour {
 		{
 				DrawOddLane (position);
 				position.z += brickDepth;
-			if ((wallDepth - 2 * position.z) < brickDepth) {
+			if ((wallDepth-brickDepth) / 2 < position.z && position.z < (wallDepth + brickDepth) / 2) {
 				//change the depth if whole brick depth does not fit and break
 				position.z = wallDepth/4 + position.z/2 - brickDepth/4;
 				prefab.transform.localScale = new Vector3 (prefab.transform.localScale.x, 
@@ -218,7 +218,7 @@ public class WallBuild : MonoBehaviour {
 				DrawEvenLane (position);
 				position.z += brickDepth;
 			}
-			if ((wallDepth - 2 * position.z) < brickDepth) {
+			if ((wallDepth-brickDepth) / 2 < position.z && position.z < (wallDepth + brickDepth) / 2) {
 				//change the depth if whole brick depth does not fit and break
 				position.z = wallDepth / 4 + position.z / 2 - brickDepth / 4;
 				prefab.transform.localScale = new Vector3 (prefab.transform.localScale.x, 

@@ -88,9 +88,6 @@ public class BezierCurve : MonoBehaviour {
 			return; 
 		//if all three are given, check if they mathematically agree with each other
 		else if (height && embrasure && fs) {
-			Debug.Log (height);
-			Debug.Log (embrasure);
-			Debug.Log (fs);
 			float inputAngle = angle;
 			AngleCalc ();
 			if (!Mathf.Approximately (inputAngle, Mathf.Round(angle)))
