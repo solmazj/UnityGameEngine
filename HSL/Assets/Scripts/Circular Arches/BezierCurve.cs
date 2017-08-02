@@ -135,6 +135,7 @@ public class BezierCurve : MonoBehaviour {
 				new Vector3 (freeSpan / 2, yPos, 0f)
 			};
 			this.gameObject.GetComponent<Abutments> ().SetAbutmentPositions (-freeSpan / 2);
+
 			StackTrace stackTrace = new StackTrace();
 			if (stackTrace.GetFrame (1).GetMethod ().Name != "SetSpringLine") {
 				PrintingParameters ();

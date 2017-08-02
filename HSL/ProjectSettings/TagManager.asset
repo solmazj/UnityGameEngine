@@ -10,6 +10,7 @@ TagManager:
   - Arch
   - Brick
   - Abutment
+  - Corbel
   layers:
   - Default
   - TransparentFX

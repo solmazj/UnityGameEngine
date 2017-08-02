@@ -20,9 +20,7 @@ public class Abutments : MonoBehaviour {
 
 	public void SetAbutmentPositions(float pos) {
 		leftPoint = pos;
-//		BuildAbutment ();
 	}
-
 
 	public void BuildAbutment () {
 		//cleaning the objects created before
