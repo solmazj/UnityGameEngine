@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Diagnostics;
 
 
 //IN PROGRESS. Works with given height and free span only, for now
@@ -17,6 +18,7 @@ public class BezierCurve : MonoBehaviour {
 
 	public void SetSpringLine (string bla) {
 		yPos = this.gameObject.GetComponent<Abutments> ().wallHeight;
+		CheckUp ();
 	}
 
 
@@ -95,6 +97,8 @@ public class BezierCurve : MonoBehaviour {
 		}
 		//if two parameters are provided
 		else {
+			same = true;
+
 			if (fs && height && !embrasure) {
 				AngleCalc ();
 			}
@@ -131,16 +135,19 @@ public class BezierCurve : MonoBehaviour {
 				new Vector3 (freeSpan / 2, yPos, 0f)
 			};
 			this.gameObject.GetComponent<Abutments> ().SetAbutmentPositions (-freeSpan / 2);
-			PrintingParameters ();
+			StackTrace stackTrace = new StackTrace();
+			if (stackTrace.GetFrame (1).GetMethod ().Name != "SetSpringLine") {
+				PrintingParameters ();
+			}
 		}
 	}
 
 
 	void PrintingParameters () {
 		//Print the free span, height and arc of embrasure of the modeled arch
-		Debug.Log ("The free span of the arch is " + freeSpan.ToString ("n2"));
-		Debug.Log ("The height of the arch is " + archHeight.ToString ("n2"));
-		Debug.Log ("The arc of embrasure is " + angle.ToString ("n2") + " degrees");
+		UnityEngine.Debug.Log ("The free span of the arch is " + freeSpan.ToString ("n2"));
+		UnityEngine.Debug.Log ("The height of the arch is " + archHeight.ToString ("n2"));
+		UnityEngine.Debug.Log ("The arc of embrasure is " + angle.ToString ("n2") + " degrees");
 	}
 
 	void AngleCalc () {

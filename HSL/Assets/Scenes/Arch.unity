@@ -1673,7 +1673,7 @@ MonoBehaviour:
   numberOfBricks: 25
   archThickness: 2.5
   brickDepth: 2
-  vaultDepth: 8
+  vaultDepth: 4
 --- !u!114 &838243769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1690,7 +1690,7 @@ MonoBehaviour:
   brickDepth: 1
   wallLength: 7
   wallHeight: 4
-  wallDepth: 2
+  wallDepth: 4
 --- !u!1 &857717445
 GameObject:
   m_ObjectHideFlags: 0
@@ -3689,17 +3689,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 838243766}
         m_MethodName: SetFreeSpan
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 838243769}
-        m_MethodName: SetAbutmentPositions
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
