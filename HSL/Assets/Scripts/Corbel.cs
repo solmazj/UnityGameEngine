@@ -7,11 +7,15 @@ using System;
 public class Corbel : MonoBehaviour {
 
 	public float brickLength, brickHeight, brickDepth, freeSpan, overhang, vaultDepth;
+	[HideInInspector]
+	public int count;
 	GameObject prefab;
 	float yPos = 0;
 
 	void Start () {
-		this.gameObject.GetComponent<Abutments> ().SetAbutmentPositions (-freeSpan / 2);
+		if (this.gameObject.GetComponent<Abutments> () != null) {
+			this.gameObject.GetComponent<Abutments> ().SetAbutmentPositions (-freeSpan / 2);
+		}
 	}
 
 	public void SetSpringLine () {
@@ -46,6 +50,7 @@ public class Corbel : MonoBehaviour {
 
 
 	void Corbelled (float z) {
+		count = 0;
 		//creating a parent object. Position will be (0,0,0)
 		GameObject parent = new GameObject("Corbelled Arch");
 		parent.transform.tag = "Corbel";
@@ -64,7 +69,7 @@ public class Corbel : MonoBehaviour {
 			brickLeft.transform.parent = parent.transform;
 			brickLeft.transform.tag = "Brick";
 
-			j++; k++;
+			j++; k++; count++;
 		}
 		GameObject brick = Instantiate (prefab) as GameObject;
 		brick.transform.position = new Vector3 (0, initialY + j * brickHeight, z);

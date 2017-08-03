@@ -94,6 +94,7 @@
 'Assets/Scripts/Circular Arches/Shown.cs'
 'Assets/Scripts/Circular Arches/WedgeBrickMesh.cs'
 'Assets/Scripts/Corbel.cs'
+'Assets/Scripts/Experiment/TryingBoolean.cs'
 'Assets/Scripts/Walls/Change Dimensions with Sliders and Intial Conditions/ChangeLengthSlider.cs'
 'Assets/Scripts/Walls/Change Dimensions with Sliders and Intial Conditions/InitialPositions.cs'
 'Assets/Scripts/Walls/Change Dimensions with Sliders and Intial Conditions/ValueUpdate.cs'
