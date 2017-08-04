@@ -28,15 +28,19 @@ public class TrialMesh : MonoBehaviour {
 		int j = 0;
 		//works only if the haunch does not start right where the arch ends (*2 part)
 		int numberOfTriangles = this.gameObject.GetComponent<Corbel> ().count * 4;
+//		numberOfTriangles = 4;
 		Debug.Log ("number of triangles is " + numberOfTriangles);
 		int numberOfVertices = numberOfTriangles * 3;
 		Debug.Log ("number of vertices is " + numberOfVertices);
 		//assigning vertices
 		Vector3[] vertices = new Vector3[numberOfVertices];
 		Vector3 middle = new Vector3 (distance, 0, -depth);
-		for (int keepTrack = 1, i = 0; keepTrack <= numberOfTriangles; keepTrack++, i += 3) {
+		Vector3 middleOpp = new Vector3 (-distance, 0, -depth);
+		for (int keepTrack = 1, i = 0; keepTrack <= numberOfTriangles/2; keepTrack++, i += 3) {
 			vertices [i] = new Vector3 (distance, haunchHeight, -depth);
+			vertices [numberOfVertices - (i+1)] = new Vector3 (-distance, haunchHeight, -depth);
 			vertices [i+1] = middle;
+			vertices [numberOfVertices - (i + 2)] = middleOpp;
 			if (keepTrack % 2 != 0) {
 				if (keepTrack == 1) {
 					j = 0;
@@ -44,12 +48,15 @@ public class TrialMesh : MonoBehaviour {
 				else {
 					j++;
 				}
-			vertices [i + 2] = new Vector3 (distance - haunchLength - j * overhang, offset * brickHeight, -depth);
+				vertices [i + 2] = new Vector3 (distance - haunchLength - j * overhang, offset * brickHeight, -depth);
+				vertices [numberOfVertices - (i + 3)] = new Vector3 (-(distance - haunchLength - j * overhang), offset * brickHeight, -depth);
 			} else {
 				offset++;
 				vertices [i + 2] = new Vector3 (distance - haunchLength - j * overhang, offset * brickHeight, -depth);
+				vertices [numberOfVertices - (i + 3)] = new Vector3 (-(distance - haunchLength - j * overhang), offset * brickHeight, -depth);
 			}
 			middle = vertices [i + 2];
+			middleOpp = vertices [numberOfVertices - (i + 3)];
 //			keepTrack++;
 		}
 		mesh.vertices = vertices;
