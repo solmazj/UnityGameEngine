@@ -767,7 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a95396807c5e43478e308cbd7888e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  haunchHeight: 4
+  haunchHeight: 5.62
   haunchLength: 1
 --- !u!1 &1823803474
 GameObject:

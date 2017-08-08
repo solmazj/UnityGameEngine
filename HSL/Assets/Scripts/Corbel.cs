@@ -10,7 +10,8 @@ public class Corbel : MonoBehaviour {
 	[HideInInspector]
 	public int count;
 	GameObject prefab;
-	float yPos = 0;
+	[HideInInspector]
+	public float yPos = 0;
 
 	void Start () {
 		if (this.gameObject.GetComponent<Abutments> () != null) {
@@ -32,8 +33,15 @@ public class Corbel : MonoBehaviour {
 	public void CorbelledVault () { 
 		CleanUp ();
 
-		for (int i = 0; i < vaultDepth/brickDepth; i++) {
+		float division = vaultDepth / brickDepth;
+		if(!Mathf.Approximately(division-Mathf.Round(division),0)) {
+			throw new Exception ("Vault depth has to be a multiple of brick depth. Check the input.");
+		}
+			
+		Debug.Log (division);
+		for (int i = 0; i < division; i++) {
 			Corbelled ((-vaultDepth + brickDepth) / 2 + i * brickDepth); 
+			Debug.Log ("just ran");
 		}
 	}
 
