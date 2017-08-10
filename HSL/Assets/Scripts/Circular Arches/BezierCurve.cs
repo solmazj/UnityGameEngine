@@ -65,19 +65,16 @@ public class BezierCurve : MonoBehaviour {
 	public void ArchFreeSpan (bool isOn) {
 		if (!isOn)
 			SetFreeSpan ("");
-		CheckUp ();
 	}
 
 	public void TheArchHeight (bool isOn) {
 		if (!isOn)
 			SetArchHeight ("");
-		CheckUp ();
 	}
 
 	public void ArcOfEmbrasure (bool isOn) {
 		if (!isOn)
 			SetArcOfEmbrasure ("");
-		CheckUp ();
 	}
 
 
@@ -92,8 +89,10 @@ public class BezierCurve : MonoBehaviour {
 		else if (height && embrasure && fs) {
 			float inputAngle = angle;
 			AngleCalc ();
-			if (!Mathf.Approximately (inputAngle, Mathf.Round(angle)))
+			if (!Mathf.Approximately (inputAngle, Mathf.Round (angle))) {
 				same = false;
+				angle = inputAngle;
+			}
 		}
 		//if two parameters are provided
 		else {

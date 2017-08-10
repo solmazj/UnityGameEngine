@@ -95,6 +95,6 @@ public class Corbel : MonoBehaviour {
 		/*because it is a prefab, if the color of the modeled brick changes, the prefab color
 		changes too even if this method is not called (in this case, even if button is not pressed*/
 		prefab = Resources.Load ("CorbelBrick") as GameObject;
-		prefab.GetComponent<Renderer> ().material = Resources.Load ("Brick") as Material;
+		prefab.GetComponent<Renderer> ().material = Resources.Load ("Parquet") as Material;
 	}
 }

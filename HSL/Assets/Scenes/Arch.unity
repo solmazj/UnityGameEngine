@@ -4280,7 +4280,6 @@ GameObject:
   - component: {fileID: 1325238559}
   - component: {fileID: 1325238558}
   - component: {fileID: 1325238560}
-  - component: {fileID: 1325238561}
   m_Layer: 0
   m_Name: Corbel
   m_TagString: Untagged
@@ -4337,20 +4336,6 @@ MonoBehaviour:
   wallLength: 5.74
   wallHeight: 4.47
   wallDepth: 4.2
---- !u!114 &1325238561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1325238557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a95396807c5e43478e308cbd7888e94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  haunchHeight: 10.47
-  haunchLength: 1
-  materialName: Stone
 --- !u!1 &1333716859
 GameObject:
   m_ObjectHideFlags: 0
@@ -6248,7 +6233,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1325238561}
+      - m_Target: {fileID: 0}
         m_MethodName: CreateMesh
         m_Mode: 1
         m_Arguments:
