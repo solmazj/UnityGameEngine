@@ -1,0 +1,55 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+
+//attach to the brick to change its color
+public class ColorRGB : MonoBehaviour 
+{
+
+	GameObject brick;
+	//transparency of a stone is set for 255
+	byte transparency = 255;
+	//RGB values are set to be 255 as a default color
+	byte red = 255, green = 255, blue = 255;
+
+	void Awake () 
+	{
+		brick = this.gameObject;
+	}
+
+	public void ColorUpdateRed (string input) 
+	{
+		red = BoundaryConditions (input);
+		ColorUpdate ();
+	}
+
+	public void ColorUpdateGreen (string input) 
+	{
+		green = BoundaryConditions (input);
+		ColorUpdate ();
+	}
+	 
+	public void ColorUpdateBlue (string input) 
+	{
+		blue = BoundaryConditions (input);
+		ColorUpdate ();
+	}
+
+	byte BoundaryConditions (string input) 
+	{
+		if (String.IsNullOrEmpty(input)) {return (byte)255;}
+
+		int integer = Mathf.Clamp (int.Parse(input), 0, 255);
+		return (byte)integer;
+	} 
+
+	void ColorUpdate ()
+	{
+		brick.GetComponent<Renderer>().material.color = new Color32(red, green, blue, transparency);
+	}
+}
+
+
+
