@@ -16,12 +16,11 @@ public class ArchBuild : MonoBehaviour {
 	float[] arcLengths;
 	float curveLength,  innerBrickLength, outerBrickLength;
 	GameObject prefab, halfPrefab, halfDepthPrefab;
-	[HideInInspector]
-	TunnelForArch tunnel;
+	CircularTunnel tunnel;
 
 
 	void Awake () {
-		tunnel = this.gameObject.AddComponent<TunnelForArch> ();
+		tunnel = this.gameObject.AddComponent<CircularTunnel> ();
 	}
 
 

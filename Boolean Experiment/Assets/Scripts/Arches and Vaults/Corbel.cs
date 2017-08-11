@@ -12,6 +12,12 @@ public class Corbel : MonoBehaviour {
 	GameObject prefab;
 	[HideInInspector]
 	public float yPos = 0;
+	CorbelTunnel tunnel;
+
+	void Awake () {
+		tunnel = this.gameObject.AddComponent<CorbelTunnel> ();
+	}
+
 
 	void Start () {
 		if (this.gameObject.GetComponent<Abutments> () != null) {
@@ -27,6 +33,7 @@ public class Corbel : MonoBehaviour {
 	public void CorbelledArch () {
 		CleanUp ();
 		Corbelled (0);
+		tunnel.Tunnel ();
 	}
 
 
@@ -38,11 +45,10 @@ public class Corbel : MonoBehaviour {
 			throw new Exception ("Vault depth has to be a multiple of brick depth. Check the input.");
 		}
 			
-		Debug.Log (division);
 		for (int i = 0; i < division; i++) {
 			Corbelled ((-vaultDepth + brickDepth) / 2 + i * brickDepth); 
-			Debug.Log ("just ran");
 		}
+		tunnel.Tunnel ();
 	}
 
 
@@ -53,6 +59,8 @@ public class Corbel : MonoBehaviour {
 			Destroy (Corbelled [i].gameObject);
 		}
 
+		Destroy (GameObject.Find ("Tunnel"));
+			
 		CreatePrefab ();
 	}
 
@@ -64,6 +72,7 @@ public class Corbel : MonoBehaviour {
 		parent.transform.tag = "Corbel";
 
 		float initialX = (freeSpan + brickLength) / 2, initialY = yPos + brickHeight / 2;
+		this.gameObject.GetComponent<Abutments> ().SetAbutmentPositions (-freeSpan / 2);
 
 		int j = 0, k = 0;
 		while (2 * (initialX - k * overhang) > brickLength) {
@@ -79,6 +88,8 @@ public class Corbel : MonoBehaviour {
 
 			j++; k++; count++;
 		}
+
+
 		GameObject brick = Instantiate (prefab) as GameObject;
 		brick.transform.position = new Vector3 (0, initialY + j * brickHeight, z);
 		brick.transform.parent = parent.transform;
@@ -95,6 +106,6 @@ public class Corbel : MonoBehaviour {
 		/*because it is a prefab, if the color of the modeled brick changes, the prefab color
 		changes too even if this method is not called (in this case, even if button is not pressed*/
 		prefab = Resources.Load ("CorbelBrick") as GameObject;
-		prefab.GetComponent<Renderer> ().material = Resources.Load ("Parquet") as Material;
+		prefab.GetComponent<Renderer> ().material = Resources.Load ("Brick") as Material;
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
 
-public class TunnelForArch : MonoBehaviour {
+public class CircularTunnel : MonoBehaviour {
 
 	public void Tunnel () {
 
