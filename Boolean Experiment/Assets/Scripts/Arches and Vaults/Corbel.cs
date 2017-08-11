@@ -79,12 +79,13 @@ public class Corbel : MonoBehaviour {
 			GameObject brickRight = Instantiate (prefab) as GameObject;
 			brickRight.transform.position = new Vector3 (initialX - k * overhang, initialY + j * brickHeight, z);
 			brickRight.transform.parent = parent.transform;
-			brickRight.transform.tag = "Brick";
+			brickRight.transform.tag = "StructureBrick";
+
 
 			GameObject brickLeft = Instantiate (prefab) as GameObject;
 			brickLeft.transform.position = new Vector3 (-(initialX - k * overhang), initialY + j * brickHeight, z);
 			brickLeft.transform.parent = parent.transform;
-			brickLeft.transform.tag = "Brick";
+			brickLeft.transform.tag = "StructureBrick";
 
 			j++; k++; count++;
 		}
@@ -93,7 +94,7 @@ public class Corbel : MonoBehaviour {
 		GameObject brick = Instantiate (prefab) as GameObject;
 		brick.transform.position = new Vector3 (0, initialY + j * brickHeight, z);
 		brick.transform.parent = parent.transform;
-		brick.transform.tag = "Brick";
+		brick.transform.tag = "StructureBrick";
 	}
 		
 

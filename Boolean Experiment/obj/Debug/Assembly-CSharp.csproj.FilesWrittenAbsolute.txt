@@ -108,3 +108,4 @@
 /Users/Solmaz/Documents/UnityGameEngine/Boolean Experiment/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/Solmaz/Documents/UnityGameEngine/Boolean Experiment/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/Solmaz/Documents/UnityGameEngine/Boolean Experiment/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/Solmaz/Documents/UnityGameEngine/Boolean Experiment/Temp/bin/Debug/CSG.dll

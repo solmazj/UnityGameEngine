@@ -26,8 +26,8 @@ public class CircularTunnel : MonoBehaviour {
 			GameObject cube = GameObject.CreatePrimitive (PrimitiveType.Cube);
 			cube.transform.tag = "Tunnel";
 			cube.transform.parent = parent.transform;
-			float height = Mathf.Abs(arc.GetPoint((t + 1) / (2f * increment)).y);
-			float length = 2 * Mathf.Abs(arc.GetPoint(t / (2f * increment)).x);
+			float height = Mathf.Abs(arc.GetPoint((t + 1) / (2f * increment)).y) + 0.2f;
+			float length = 2 * Mathf.Abs(arc.GetPoint(t / (2f * increment)).x) + 0.2f;
 			cube.transform.localScale = new Vector3 (length, height, depth);
 			cube.transform.position = new Vector3 (0, height/2, 0);
 		}

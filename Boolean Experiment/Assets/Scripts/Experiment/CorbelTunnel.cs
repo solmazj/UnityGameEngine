@@ -13,7 +13,7 @@ public class CorbelTunnel : MonoBehaviour {
 		float vaultDepth = GameObject.Find("Corbel").GetComponent<Corbel>().vaultDepth;
 		float brickHeight = GameObject.Find("Corbel").GetComponent<Corbel>().brickHeight;
 		float height = brickHeight + GameObject.Find ("Corbel").GetComponent<Corbel> ().yPos;;
-		float length = GameObject.Find("Corbel").GetComponent<Corbel>().freeSpan;
+		float length = GameObject.Find("Corbel").GetComponent<Corbel>().freeSpan + 0.2f;
 		float overhang = GameObject.Find("Corbel").GetComponent<Corbel>().overhang;
 		float depth;
 

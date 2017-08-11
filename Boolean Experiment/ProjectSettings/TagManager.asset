@@ -12,6 +12,7 @@ TagManager:
   - Abutment
   - Corbel
   - Tunnel
+  - StructureBrick
   layers:
   - Default
   - TransparentFX
