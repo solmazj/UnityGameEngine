@@ -139,6 +139,7 @@ public class ArchBuild : MonoBehaviour {
 		while (i <= numberOfBricks) {
 			Transform item = Instantiate (prefab.transform) as Transform;
 			item.transform.tag = "StructureBrick";
+			item.gameObject.AddComponent<BoxCollider>();
 			Vector3 position = wireArc.GetPoint (Map (u));
 			item.transform.localPosition = position;
 			//align the bricks along the arc
@@ -150,6 +151,7 @@ public class ArchBuild : MonoBehaviour {
 			if (i <= numberOfBricks) {
 				item = Instantiate (halfDepthPrefab.transform) as Transform;
 				item.transform.tag = "StructureBrick";
+				item.gameObject.AddComponent<BoxCollider>();
 				position = wireArc.GetPoint (Map (u));
 				item.transform.localPosition = position;
 				//align the bricks along the arc
@@ -174,6 +176,7 @@ public class ArchBuild : MonoBehaviour {
 		while (i <= numberOfBricks) {
 			Transform item = Instantiate (prefab.transform) as Transform;
 			item.transform.tag = "StructureBrick";
+			item.gameObject.AddComponent<BoxCollider>();
 			Vector3 position = wireArc.GetPoint (Map (u));
 			item.transform.localPosition = position;
 			//align the bricks along the arc
@@ -185,6 +188,7 @@ public class ArchBuild : MonoBehaviour {
 			if (i <= numberOfBricks) {
 				item = Instantiate (prefab.transform) as Transform;
 				item.transform.tag = "StructureBrick";
+				item.gameObject.AddComponent<BoxCollider>();
 				position = wireArc.GetPoint (Map (u));
 				position.z += brickDepth / 2;
 				item.transform.localPosition = position;
@@ -210,6 +214,7 @@ public class ArchBuild : MonoBehaviour {
 		while (i < numberOfBricks) {
 			Transform item = Instantiate (halfDepthPrefab.transform) as Transform;
 			item.transform.tag = "StructureBrick";
+			item.gameObject.AddComponent<BoxCollider>();
 			Vector3 position = wireArc.GetPoint (Map (u));
 			item.transform.localPosition = position;
 			//align the bricks along the arc
@@ -244,6 +249,7 @@ public class ArchBuild : MonoBehaviour {
 		for (int i = 1; i <= numberOfBricks; i++) {
 			Transform item = Instantiate (prefab.transform) as Transform;
 			item.transform.tag = "StructureBrick";
+			item.gameObject.AddComponent<BoxCollider>();
 			Vector3 position = wireArc.GetPoint (Map (u));
 			item.transform.localPosition = position;
 			//align the bricks along the arc
@@ -264,6 +270,7 @@ public class ArchBuild : MonoBehaviour {
 		float u = (innerBrickLength/4)/curveLength;
 		Transform item = Instantiate (halfPrefab.transform) as Transform;
 		item.transform.tag = "StructureBrick";
+		item.gameObject.AddComponent<BoxCollider>();
 		Vector3 position = wireArc.GetPoint (Map (u));
 		item.transform.localPosition = position;
 		//align the bricks along the arc
@@ -274,6 +281,7 @@ public class ArchBuild : MonoBehaviour {
 		for (int i = 1; i < numberOfBricks; i++) {
 			item = Instantiate (prefab.transform) as Transform;
 			item.transform.tag = "StructureBrick";
+			item.gameObject.AddComponent<BoxCollider>();
 			position = wireArc.GetPoint (Map (u));
 			item.transform.localPosition = position;
 			//align the bricks along the arc
@@ -285,6 +293,7 @@ public class ArchBuild : MonoBehaviour {
 		u = u - ((innerBrickLength / curveLength) / 4);
 		item = Instantiate (halfPrefab.transform) as Transform;
 		item.transform.tag = "StructureBrick";
+		item.gameObject.AddComponent<BoxCollider>();
 		position = wireArc.GetPoint (Map (u));
 		item.transform.localPosition = position;
 		//align the bricks along the arc

@@ -16,7 +16,7 @@ public class BrickWall : MonoBehaviour {
 
 
 	void Awake () {
-		parent = new GameObject("Wall");
+		parent = new GameObject("SolidWall");
 	}
 
 
@@ -186,31 +186,74 @@ public class BrickWall : MonoBehaviour {
 		CSG.EPSILON = 1e-5f; // Adjustable epsilon value
 		CSG csg = new CSG();
 
-
+//		Debug.Log ("I am activated");
 
 		GameObject[] bricks = GameObject.FindGameObjectsWithTag ("Brick");
-
+//		Debug.Log ("Number of bricks is " + bricks.Length);
 		foreach (GameObject brick in bricks) {
 			csg.Target = brick;
 			GameObject newOne;
 			Collider[] hitColliders = Physics.OverlapSphere(brick.transform.position, brickLength);
+//			Debug.Log ("Number of hitColliders is " + hitColliders.Length);
 			for (int i = 0; i < hitColliders.Length; i++)
 			{
-				if (hitColliders [i].gameObject.transform.tag == "Tunnel" || hitColliders [i].gameObject.transform.tag == "StructureBrick") {
+				if (hitColliders [i].gameObject.transform.tag == "StructureBrick") {
 
 					csg.Brush = hitColliders[i].gameObject;
 					csg.OperationType = CSG.Operation.Subtract;
 					csg.customMaterial = new Material(Shader.Find("Standard")); // Custom material
 					csg.useCustomMaterial = false; // Use the above material to fill cuts
 					csg.hideGameObjects = false; // Hide target and brush objects after operation
+
 					csg.keepSubmeshes = true; // Keep original submeshes and materials
 					newOne = csg.PerformCSG();
 					Destroy (csg.Target);
 					csg.Target = newOne;
 					newOne.name = "BrickWall";
+					newOne.tag = "Brick";
+//					Debug.Log ("I am in the if statement ivolving colliders");
 				}
 			}
 		}
-		Destroy(GameObject.Find("Tunnel"));
+//		Destroy(GameObject.Find("Tunnel"));
+	}
+
+
+
+	public void Experimental () {
+		
+		CSG.EPSILON = 1e-5f; // Adjustable epsilon value
+		CSG csg = new CSG();
+
+		GameObject[] bricks = GameObject.FindGameObjectsWithTag ("Brick");
+		//		Debug.Log ("Number of bricks is " + bricks.Length);
+		foreach (GameObject brick in bricks) {
+			csg.Target = brick;
+			GameObject newOne;
+			Collider[] hitColliders = Physics.OverlapSphere(brick.transform.position, brickLength);
+			//			Debug.Log ("Number of hitColliders is " + hitColliders.Length);
+			for (int i = 0; i < hitColliders.Length; i++)
+			{
+				if (hitColliders [i].gameObject.transform.tag == "Tunnel") {
+
+					csg.Brush = hitColliders[i].gameObject;
+					csg.OperationType = CSG.Operation.Subtract;
+					csg.customMaterial = new Material(Shader.Find("Standard")); // Custom material
+					csg.useCustomMaterial = false; // Use the above material to fill cuts
+					csg.hideGameObjects = false; // Hide target and brush objects after operation
+
+					csg.keepSubmeshes = false; // Keep original submeshes and materials
+					newOne = csg.PerformCSG();
+					Destroy (csg.Target);
+					csg.Target = newOne;
+					newOne.name = "BrickWall";
+
+					//					Debug.Log ("I am in the if statement ivolving colliders");
+				}
+			}
+		}
+				Destroy(GameObject.Find("Tunnel"));
+	
+	
 	}
 }
