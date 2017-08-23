@@ -86,3 +86,4 @@
 /Users/Solmaz/Documents/HSL/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/Solmaz/Documents/HSL/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/Solmaz/Documents/HSL/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/Solmaz/Documents/UnityGameEngine/HSL/Temp/bin/Debug/CSG.dll

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//runs on Update, aka updates every frame so not that efficient
 public class ChangeLengthOfACube : MonoBehaviour {
 	 
 	public float xLength;
