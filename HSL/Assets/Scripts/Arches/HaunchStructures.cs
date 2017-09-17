@@ -58,17 +58,7 @@ public class HaunchStructures : MonoBehaviour {
 	}
 
 
-	public void BrickBox () {
-		//builds brick box using a script adapted from WallBuild
-		this.gameObject.GetComponent<AuxiliaryBrickBoxBuild>().BrickBoxBuild(brickLength, brickHeight, brickDepth, wallLength, wallHeight, wallDepth);
-	}
-
-//
-//	public void BrickDifference () {
-//		Tunnel ();
-//		Bricks ();
-//	}
-
+	//fist do boolean difference with the tunnel
 	public void Tunnel () {
 
 		CSG.EPSILON = 1e-5f; // Adjustable epsilon value
@@ -101,7 +91,7 @@ public class HaunchStructures : MonoBehaviour {
 	}
 
 
-
+	//then boolean difference with the arch bricks
 	public void Bricks () {
 
 		CSG.EPSILON = 1e-5f; // Adjustable epsilon value

@@ -9,18 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1197603711433936}
+  m_RootGameObject: {fileID: 1370724724712522}
   m_IsPrefabParent: 1
---- !u!1 &1197603711433936
+--- !u!1 &1370724724712522
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4150466454469990}
-  - component: {fileID: 33416590441587398}
-  - component: {fileID: 23169061265811682}
+  - component: {fileID: 4048191985803000}
+  - component: {fileID: 33867651839319982}
+  - component: {fileID: 23423690390900882}
   m_Layer: 0
   m_Name: HalfWedgedBrick
   m_TagString: Untagged
@@ -28,12 +28,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4150466454469990
+--- !u!4 &4048191985803000
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1197603711433936}
+  m_GameObject: {fileID: 1370724724712522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,12 +41,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23169061265811682
+--- !u!23 &23423690390900882
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1197603711433936}
+  m_GameObject: {fileID: 1370724724712522}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -73,10 +73,10 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33416590441587398
+--- !u!33 &33867651839319982
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1197603711433936}
+  m_GameObject: {fileID: 1370724724712522}
   m_Mesh: {fileID: 4300000, guid: c1a9dd0d57a5e4c6faef7f1df130404b, type: 2}

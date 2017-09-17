@@ -1874,9 +1874,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 838243765}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f8d01ce67c874a20a5c611d7fdbf2df, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bc150abe939c4ee19838ad094c7e175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  brickLength: 1
+  brickHeight: 1
+  brickDepth: 1
+  wallLength: 12
+  wallHeight: 10
+  wallDepth: 2
 --- !u!1 &857717445
 GameObject:
   m_ObjectHideFlags: 0
@@ -3582,8 +3588,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 838243770}
-        m_MethodName: BrickBox
+      - m_Target: {fileID: 838243771}
+        m_MethodName: BrickWallBuild
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

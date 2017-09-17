@@ -5,29 +5,21 @@ using UnityEditor;
 using System;
 using UnityEngine.UI;
 
-//is called from HaunchStructures script; adapted from WallBuild script
-public class AuxiliaryBrickBoxBuild : MonoBehaviour {
+//adapted from WallBuild script
+public class BrickBoxBuild : MonoBehaviour {
 
-		GameObject prefab;
-		float brickLength, brickHeight, brickDepth, wallLength, wallHeight, wallDepth, topHeight;
+	public float brickLength, brickHeight, brickDepth, wallLength, wallHeight, wallDepth;
+	float topHeight;
+	GameObject prefab;
 
 
-
-	public void BrickBoxBuild (float lengthBrick, float heightBrick, float depthBrick, float lengthWall, float heightWall, float depthWall) {
+	public void BrickWallBuild () {
 		CreatePrefabBrick();
 			//cleaning the bricks created before
 			GameObject[] bricks = GameObject.FindGameObjectsWithTag ("Brick");
 			for (int i = 0; i < bricks.Length; i++) {
 				Destroy (bricks [i].gameObject);
 			}
-
-			//global variables assigned
-		brickLength = lengthBrick;
-		brickHeight = heightBrick;
-		brickDepth = depthBrick;
-		wallLength = lengthWall;
-		wallHeight = heightWall;
-		wallDepth = depthWall;
 
 			if (wallDepth <= brickDepth) {
 				prefab.transform.localScale = new Vector3 (prefab.transform.localScale.x,
